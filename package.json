@@ -1,32 +1,50 @@
 {
-  "name": "ng2-fuzhutech-common",
+  "name": "@fuzhutech/common",
   "version": "0.0.0",
-  "license": "MIT",
+  "description": "fuzhutech component package",
+  "main": "src/index.js",
+  "typings": "src/index.d.ts",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prepublish": "tsc"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuzhutech/ng2-fuzhutech-common.git"
+  },
+  "keywords": [
+    "fuzhutech",
+    "ng",
+    "ng2",
+    "angular2"
+  ],
+  "author": "fuzhutech",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fuzhutech/ng2-fuzhutech-common/issues"
+  },
+  "homepage": "https://github.com/fuzhutech/ng2-fuzhutech-common#readme",
   "dependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
+    "@angular/common": "^4.2.5",
+    "@angular/compiler": "^4.2.5",
+    "@angular/core": "^4.2.5",
+    "@angular/forms": "^4.2.5",
+    "@angular/http": "^4.2.5",
+    "@angular/platform-browser": "^4.2.5",
+    "@angular/platform-browser-dynamic": "^4.2.5",
+    "@angular/router": "^4.2.5",
     "core-js": "^2.4.1",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "1.0.6",
-    "@angular/compiler-cli": "^4.0.0",
+    "@angular/compiler-cli": "^4.2.5",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
