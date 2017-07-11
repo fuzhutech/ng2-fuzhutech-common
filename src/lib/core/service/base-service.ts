@@ -1,6 +1,6 @@
 import {Headers, Http, URLSearchParams} from '@angular/http';
-import {HOST_API_PATH, HOST_PATH} from './constant';
-import {ResponseResult} from '../model';
+import {HOST_API_PATH, HOST_PATH} from '../../utils/constant';
+import {ResponseResult} from '../index';
 import 'rxjs/add/operator/toPromise';
 
 export abstract class BaseService {

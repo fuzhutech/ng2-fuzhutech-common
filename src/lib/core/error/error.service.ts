@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Http, Headers, Response} from '@angular/http';
-import {HOST_API_PATH} from '../index';
+import {HOST_API_PATH} from '../../index';
 import {FzErrorModel} from './error.model';
 
 @Injectable()

@@ -1,7 +1,7 @@
 import {Component, OnInit, AfterViewInit, Input, Output, EventEmitter} from '@angular/core';
 import {ToolbarOption} from './toolbar.option';
-import {AuthInfo, MenuInfo} from '../auth-info/auth-info.model';
-import {AuthInfoService} from '../auth-info/auth-info.service';
+import {AuthInfo, MenuInfo} from '../../core/auth-info/auth-info.model';
+import {AuthInfoService} from '../../core/auth-info/auth-info.service';
 
 @Component({
     selector: 'fz-toolbar',

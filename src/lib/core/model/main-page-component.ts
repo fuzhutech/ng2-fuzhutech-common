@@ -2,7 +2,7 @@ import {Component, ComponentFactoryResolver, ViewChild, AfterViewInit, ViewConta
 import {ActivatedRoute} from '@angular/router';
 import {isUndefined} from 'util';
 
-import {TabRouterOutletService, TabData, MainLinkData, SubLinkData} from '../index';
+import {TabRouterOutletService, TabData, MainLinkData, SubLinkData} from '../../index';
 
 
 export class MainTabPageComponent {

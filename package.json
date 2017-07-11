@@ -1,8 +1,7 @@
 {
   "name": "ng2-fuzhutech-common",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "fuzhutech component package",
-  "typings": "./common.d.ts",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

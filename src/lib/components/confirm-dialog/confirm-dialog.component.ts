@@ -2,15 +2,15 @@ import {Component, Inject} from '@angular/core';
 import {MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {Observable} from 'rxjs/Rx';
 import {Response} from '@angular/http';
-import {DialogResult} from '../index';
-import {ResponseResult} from '../model/response-result-model';
-import {BaseDialog} from '../common/sub-page-component';
+import {DialogResult} from '../../index';
+import {ResponseResult} from '../../core/response-result-model';
+import {BaseDialog} from '../../core/model/sub-page-component';
 
 @Component({
     moduleId: module.id,
     selector: 'fz-confirm-dialog',
-    templateUrl: 'confirm-dialog.component.html',
-    styleUrls: ['confirm-dialog.component.css']
+    templateUrl: 'src/lib/components/confirm-dialog/confirm-dialog.component.html',
+    styleUrls: ['src/lib/components/confirm-dialog/confirm-dialog.component.css']
 })
 export class ConfirmDialogComponent implements BaseDialog {
 

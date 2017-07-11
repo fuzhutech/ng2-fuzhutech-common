@@ -1,6 +1,6 @@
-import {AuthInfoService} from '../auth-info/auth-info.service';
+import {AuthInfoService} from '../core/auth-info/auth-info.service';
 import {MdDialog} from '@angular/material';
-import {ErrorService} from '../error/error.service';
+import {ErrorService} from '../core/error/error.service';
 
 //全局变量工具类，单例模式
 export class ServiceUtil {
