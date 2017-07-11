@@ -5,7 +5,8 @@
 /aot
 
 # source
-src
+src/*
+!src/lib/*
 
 # test
 e2e

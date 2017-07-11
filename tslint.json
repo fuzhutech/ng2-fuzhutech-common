@@ -6,8 +6,7 @@
     "callable-types": true,
     "class-name": true,
     "comment-format": [
-      true,
-      "check-space"
+      true
     ],
     "curly": true,
     "eofline": true,
@@ -111,7 +110,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      "fz",
       "kebab-case"
     ],
     "use-input-property-decorator": true,

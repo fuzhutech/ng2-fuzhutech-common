@@ -26,3 +26,21 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Installation
+To use ng2-md-datatable in your project install it via [npm](https://www.npmjs.com/package/ng2-md-datatable):
+```
+npm install --save ng2-md-datatable
+```
+
+Then include it in your application's main module:
+
+```ts
+import { MdDataTableModule } from 'ng2-md-datatable';
+
+@NgModule({
+  imports: [
+    ...
+    MdDataTableModule,
+    ...
+```

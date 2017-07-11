@@ -1,0 +1,18 @@
+<span md-dialog-title>删除确认</span>
+
+<md-card style="min-width: 200px">
+    <md-card-subtitle>记录主要信息:</md-card-subtitle>
+    <md-card-content>
+        <ul>
+            <li *ngFor="let message of messages">{{message}}</li>
+        </ul>
+    </md-card-content>
+</md-card>
+
+<md-dialog-actions *ngIf="progress" [attr.align]="actionsAlignment">
+    <md-progress-bar mode="indeterminate" color="primary" style="width: 100%"></md-progress-bar>
+</md-dialog-actions>
+<md-dialog-actions [attr.align]="actionsAlignment">
+    <button md-button color="secondary" (click)="confirm()">确认</button>
+    <button md-button color="secondary" (click)="cancel()">取消</button>
+</md-dialog-actions>

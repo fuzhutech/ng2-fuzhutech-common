@@ -1,17 +1,15 @@
 {
-  "name": "@fuzhutech/common",
-  "version": "0.0.0",
+  "name": "ng2-fuzhutech-common",
+  "version": "0.0.4",
   "description": "fuzhutech component package",
-  "main": "src/index.js",
-  "typings": "src/index.d.ts",
+  "typings": "./common.d.ts",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "prepublish": "tsc"
+    "e2e": "ng e2e"
   },
   "repository": {
     "type": "git",
@@ -30,16 +28,21 @@
   },
   "homepage": "https://github.com/fuzhutech/ng2-fuzhutech-common#readme",
   "dependencies": {
+    "@angular/animations": "^4.2.5",
+    "@angular/cdk": "^2.0.0-beta.8",
     "@angular/common": "^4.2.5",
     "@angular/compiler": "^4.2.5",
     "@angular/core": "^4.2.5",
     "@angular/forms": "^4.2.5",
     "@angular/http": "^4.2.5",
+    "@angular/material": "^2.0.0-beta.8",
     "@angular/platform-browser": "^4.2.5",
     "@angular/platform-browser-dynamic": "^4.2.5",
     "@angular/router": "^4.2.5",
     "core-js": "^2.4.1",
+    "primeng": "^4.0.2",
     "rxjs": "^5.1.0",
+    "ts-md5": "^1.2.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

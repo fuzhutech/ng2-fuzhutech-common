@@ -1,0 +1,29 @@
+<md-toolbar>
+    <button *ngIf="visibleView" md-button (click)="viewClick($event)"
+            [disabled]="disabledView || enableViewRight && !hasViewRight">
+        <md-icon>view_agenda</md-icon>
+        查看
+    </button>
+    <button *ngIf="visibleAdd" md-button (click)="addClick($event)"
+            [disabled]="disabledAdd || enableAddRight && !hasAddRight">
+        <md-icon>note_add</md-icon>
+        新增
+    </button>
+    <button *ngIf="visibleEdit" md-button (click)="editClick($event)"
+            [disabled]="disabledEdit || enableEditRight && !hasEditRight">
+        <md-icon>mode_edit</md-icon>
+        編輯
+    </button>
+    <button *ngIf="visibleDelete" md-button (click)="deleteClick($event)"
+            [disabled]="disabledDelete || enableDeleteRight && !hasDeleteRight">
+        <md-icon>delete</md-icon>
+        刪除
+    </button>
+    <button *ngIf="visibleRefresh" md-button (click)="refreshClick($event)"
+            [disabled]="disabledRefresh || enableRefreshRight && !hasRefreshRight">
+        <md-icon>loop</md-icon>
+        刷新
+    </button>
+
+    <ng-content></ng-content>
+</md-toolbar>
