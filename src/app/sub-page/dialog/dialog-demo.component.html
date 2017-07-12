@@ -1,0 +1,47 @@
+<span md-dialog-title>{{dialogHeader}}</span>
+
+<md-dialog-content *ngIf="record">
+    <p>
+        <md-input-container>
+            <input mdInput [(ngModel)]="record.loginname" placeholder="登录名">
+        </md-input-container>
+        <md-input-container>
+            <input mdInput [(ngModel)]="record.name" placeholder="姓名">
+        </md-input-container>
+        <md-select placeholder="性别" [(ngModel)]="record.sex">
+            <md-option *ngFor="let state of statuses" [value]="state.value">{{ state.label }}</md-option>
+        </md-select>
+    </p>
+    <p>
+        <md-input-container>
+            <input mdInput [(ngModel)]="record.age" placeholder="年龄">
+        </md-input-container>
+        <md-input-container>
+            <input mdInput [(ngModel)]="record.phone" placeholder="电话">
+        </md-input-container>
+    </p>
+
+    <p>
+        <md-select placeholder="所属部门" [(ngModel)]="record.organizationName">
+            <md-option *ngFor="let state of statuses" [value]="state.value">{{ state.label }}</md-option>
+        </md-select>
+        <md-select placeholder="角色" [(ngModel)]="record.rolesList">
+            <md-option *ngFor="let state of statuses" [value]="state.value">{{ state.label }}</md-option>
+        </md-select>
+        <md-select placeholder="状态" [(ngModel)]="record.status">
+            <md-option *ngFor="let state of statuses" [value]="state.value">{{ state.label }}</md-option>
+        </md-select>
+        <md-select placeholder="用户类型" [(ngModel)]="record.usertype">
+            <md-option *ngFor="let state of statuses" [value]="state.value">{{ state.label }}</md-option>
+        </md-select>
+    </p>
+
+</md-dialog-content>
+
+<md-dialog-actions *ngIf="progress" [attr.align]="actionsAlignment">
+    <md-progress-bar mode="indeterminate" color="primary" style="width: 100%"></md-progress-bar>
+</md-dialog-actions>
+<md-dialog-actions [attr.align]="actionsAlignment">
+    <button md-button color="secondary" (click)="handleConfirm()">确认</button>
+    <button md-button color="secondary" (click)="handleCancel()">取消</button>
+</md-dialog-actions>

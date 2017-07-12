@@ -9,8 +9,8 @@ import {BaseDialog} from '../../core/model/sub-page-component';
 @Component({
     moduleId: module.id,
     selector: 'fz-confirm-dialog',
-    templateUrl: 'src/lib/components/confirm-dialog/confirm-dialog.component.html',
-    styleUrls: ['src/lib/components/confirm-dialog/confirm-dialog.component.css']
+    templateUrl: './confirm-dialog.component.html',
+    styleUrls: ['./confirm-dialog.component.css']
 })
 export class ConfirmDialogComponent implements BaseDialog {
 

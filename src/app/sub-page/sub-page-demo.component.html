@@ -1,0 +1,30 @@
+<fz-toolbar [disabledView]="!selectedRecord" (onViewClick)="handleView()" (onAddClick)="handleAdd()"
+            [disabledEdit]="!selectedRecord" (onEditClick)="handleEdit()"
+            [disabledDelete]="!selectedRecord" (onDeleteClick)="handleDelete()"
+            (onRefreshClick)="handleRefresh()"
+            [menuId]="currentMenuId" [authInfo]="currentAuthInfo" [menuInfo]="currentMenuInfo">
+
+    <button md-button (click)="grant()">
+        <md-icon>view_module</md-icon>
+        分配角色
+    </button>
+
+</fz-toolbar>
+
+<p-dataTable [value]="records" selectionMode="single" [(selection)]="selectedRecord"
+             [paginator]="true" [rows]="15" [responsive]="true" resizableColumns="true">
+    <!--header>CRUD for Users</header-->
+    <p-column field="loginName" header="登录名"></p-column>
+    <p-column field="nickName" header="昵称"></p-column>
+    <p-column field="realName" header="姓名"></p-column>
+    <p-column field="email" header="email"></p-column>
+    <p-column field="cellPhone" header="电话"></p-column>
+
+    <p-column field="status" header="状态">
+        <ng-template let-col let-car="rowData" pTemplate="body">
+            <span>{{getStatus(car[col.field])}}</span>
+        </ng-template>
+    </p-column>
+    <p-column field="description" header="描述"></p-column>
+    <p-column field="createdate" header="创建时间" [style]="{'width':'250px'}"></p-column>
+</p-dataTable>
