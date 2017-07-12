@@ -12,7 +12,12 @@ import {MainLinkData} from '../ng2-fuzhutech-common';
                 component: TabPageDemoComponent,
                 children: [
                     {path: '', redirectTo: 'sub-page'},
-                    {path: 'sub-page', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'}
+                    {path: 'sub-page', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
+                    {path: 'sub-page1', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
+                    {path: 'sub-page2', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
+                    {path: 'demo1', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
+                    {path: 'demo2', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
+                    {path: 'demo3', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'}
                 ]
             }
         ])
@@ -28,49 +33,38 @@ export const ConfigMenuData: MainLinkData[] = [
     {
         id: 'menu_basic_config',
         img: 'showcase/resources/images/mono/menu.svg',
-        text: '基础配置',
+        text: '页面布局',
         subMenuLinkCol: [
             {
-                path: 'permission',
-                title: '权限配置'
+                path: 'sub-page',
+                title: '子页面示例'
             },
             {
-                path: 'resource',
-                title: '资源配置'
+                path: 'sub-page1',
+                title: '子页面示例1'
             },
             {
-                path: 'chain-path',
-                title: '路径配置'
+                path: 'sub-page2',
+                title: '子页面示例2'
             }
         ]
     },
     {
         id: 'menu_system management',
         img: 'showcase/resources/images/mono/menu.svg',
-        text: '系统管理',
+        text: '其他示例',
         subMenuLinkCol: [
             {
-                path: 'user',
-                title: '用户管理'
+                path: 'demo1',
+                title: '示例1'
             },
             {
-                path: 'organization',
-                title: '组织机构'
+                path: 'demo2',
+                title: '示例2'
             },
             {
-                path: 'role',
-                title: '角色管理'
-            }
-        ]
-    },
-    {
-        id: 'menu_query',
-        img: 'showcase/resources/images/mono/menu.svg',
-        text: '综合查询',
-        subMenuLinkCol: [
-            {
-                path: 'log',
-                title: '日志查询'
+                path: 'demo3',
+                title: '示例3'
             }
         ]
     }
