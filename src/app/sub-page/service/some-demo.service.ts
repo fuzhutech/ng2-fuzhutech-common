@@ -24,7 +24,7 @@ export class SomeDemoService extends BaseService {
         //searchParams.set('sort', 'id');
         //searchParams.set('order', 'asc');
 
-        return this.http.get('assets/data/files.json', {search: searchParams, headers: headers})
+        return this.http.get('assets/data/sub-page-demo.json', {search: searchParams, headers: headers})
             .map(response => response.json());
     }
 
