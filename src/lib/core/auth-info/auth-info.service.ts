@@ -5,7 +5,7 @@ import {Http, Headers, Response} from '@angular/http';
 import {HOST_API_PATH} from '../../utils';
 import {Md5} from 'ts-md5/dist/md5';
 import {AuthInfo, AuthUser, MenuInfo} from './auth-info.model';
-import { map } from 'rxjs/operator/map';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthInfoService {
@@ -137,7 +137,7 @@ export class AuthInfoService {
 
         console.log('refreshMenuInfo');
 
-        const resObservable: Observable<Response> = this.http.get('assets/showcase/data/resources.json');
+        const resObservable: Observable<Response> = this.http.get('assets/data/resources.json');
         console.log(resObservable);
 
         resObservable.map(response => response.json());
@@ -145,7 +145,7 @@ export class AuthInfoService {
 
         return this.http
         //.get(this.host_api + '/systems/' + sysId + '/resources')
-            .get('assets/showcase/data/resources.json')
+            .get('assets/data/resources.json')
             .map((response: Response) => {
                 const res = response.json();
 
