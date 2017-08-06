@@ -14,7 +14,7 @@
     <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
     <input #gb type="text" pInputText size="50" placeholder="Global Filter">
 </div>
-<p-dataTable #dt [globalFilter]="gb" [value]="records" selectionMode="single" [(selection)]="selectedRecord"
+<p-dataTable #dt [globalFilter]="gb" [value]="records$ | async" selectionMode="single" [(selection)]="selectedRecord"
              [paginator]="true" [rows]="15" resizableColumns="true">
     <p-column field="id" header="ID" [style]="{'width':'100px'}"></p-column>
     <p-column field="name" header="Name" [style]="{'width':'200px'}"></p-column>
