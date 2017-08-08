@@ -143,12 +143,6 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
                     //this.treeTableService.records = [...this.records];
                     this.treeTableService.refreshTreeNode(id);
                 }
-            },
-            err => {
-                console.log(err);
-            },
-            () => {
-                console.log('refreshAction Complete');
             }
         );
     }
@@ -451,7 +445,7 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
      * @returns {Observable<R>}
      */
     protected doAdd(): Observable<ResponseResult> {
-        return this.service.create(this.record);
+        return this.service.addItem(this.record);
     }
 
     /**
@@ -459,7 +453,7 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
      * @returns {Observable<R>}
      */
     protected doEdit(): Observable<ResponseResult> {
-        return this.service.edit(this.record);
+        return this.service.editItem(this.record);
     }
 
     doConfirm(record: any): Observable<ResponseResult> {
@@ -532,7 +526,7 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
             data = this.selectedRecord;
         }
 
-        return this.service.delete(data);
+        return this.service.deleteItem(data);
     }
 
 
@@ -642,12 +636,12 @@ export class ComponentDialog<D, R, S extends BaseService> implements BaseDialog 
     }
 
     doAdd(): Observable<ResponseResult> {
-        return this.service.create(this.record);
+        return this.service.addItem(this.record);
     }
 
     //编辑
     doEdit() {
-        return this.service.edit(this.record);
+        return this.service.editItem(this.record);
     }
 
     //按钮-确认

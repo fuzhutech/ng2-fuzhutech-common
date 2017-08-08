@@ -4,37 +4,21 @@ import {Observable, Subscription} from 'rxjs/Rx';
 import {BaseService} from '../../ng2-fuzhutech-common';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-import {ResponseResult} from "../../../lib/core/response-result-model";
+import {ResponseResult} from '../../../lib/core/response-result-model';
 
 @Injectable()
 export class SomeDemoService extends BaseService {
 
     constructor(http: Http) {
         super(http, 'users');
+
+
+        this.url = 'assets/data/sub-page-demo.json';
     }
+
 
     /*@Override*/
-    getList() {
-        this.url = 'assets/showcase/data/files.json';
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json;charset=UTF-8');
-
-        const searchParams = new URLSearchParams();
-        //searchParams.set('offset', '1');
-        //searchParams.set('rows', '20');
-        //searchParams.set('sort', 'id');
-        //searchParams.set('order', 'asc');
-
-        return this.http.get('assets/data/sub-page-demo.json', {search: searchParams, headers: headers})
-            .map(response => {
-                const records = response.json();
-                this.updateStoreAndSubject(records);
-
-                return response.json();
-            });
-    }
-
-    create(data) {
+    addItem(data) {
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -51,7 +35,7 @@ export class SomeDemoService extends BaseService {
             });
     }
 
-    edit(data) {
+    editItem(data) {
         const i = this.getIndexOfRecords(data);
         //const updatedTodo = Object.assign({}, todo, {completed: !todo.completed});
         const updatedRecord = Object.assign({}, data);
@@ -81,7 +65,7 @@ export class SomeDemoService extends BaseService {
             });
     }
 
-    delete(data) {
+    deleteItem(data) {
         console.log(data);
         console.log(this.dataStore.records);
         if (!data) {
@@ -111,7 +95,6 @@ export class SomeDemoService extends BaseService {
                 return <ResponseResult> res.json();
             });
     }
-
 
 
 }

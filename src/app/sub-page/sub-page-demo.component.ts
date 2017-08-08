@@ -5,8 +5,6 @@ import {SubPageComponentWithComponentDialog} from '../ng2-fuzhutech-common';
 import {SomeDemoModel} from './model/some-demo.model';
 import {SomeDemoService} from './service/some-demo.service';
 import {DialogDemoComponent} from './dialog/dialog-demo.component';
-import {Todo} from '../../lib/core/service/base-service';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
     templateUrl: './sub-page-demo.component.html',
@@ -17,7 +15,7 @@ export class SubPageDemoComponent extends SubPageComponentWithComponentDialog<So
     constructor(service: SomeDemoService, dialog: MdDialog) {
         super(service, '子页面示例', dialog, DialogDemoComponent);
 
-        this.records$ = service.records;
+        this.records$ = service.records$;
     }
 
     newInstance(): SomeDemoModel {
