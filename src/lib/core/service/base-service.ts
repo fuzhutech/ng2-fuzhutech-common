@@ -24,7 +24,7 @@ export abstract class BaseService {
         this.http = http;
         this.url = this.host_api + '/' + path;
 
-        this.getConfigInfo().then(data => console.log(data));
+        //this.getConfigInfo().then(data => console.log(data));
 
         this.dataStore = {records: [], message: null};
         this._records = new BehaviorSubject<any[]>([]);
@@ -72,7 +72,8 @@ export abstract class BaseService {
                     .map(response => response.json())
                     .subscribe(
                         data => {
-                            this.records = data;
+                            console.log(data);
+                            this.records = data.data;
 
                             //设置返回Observable
                             observer.next(this.dataStore.records);
@@ -138,8 +139,10 @@ export abstract class BaseService {
                 .map(res => <ResponseResult> res.json())
                 .subscribe(
                     resResult => {
+                        console.log(resResult);
                         result = resResult as ResponseResult;
-                        this.records = resResult.data;
+
+                        this.records = [...this.dataStore.records, resResult.data];
 
                         //设置返回Observable
                         observer.next(result);
@@ -157,6 +160,7 @@ export abstract class BaseService {
      * @returns {Promise<PushSubscription>}
      */
     public editItem(record) {
+        console.log(record);
         const i = this.getIndexOfRecords(record);
 
         const headers = new Headers();
@@ -167,10 +171,11 @@ export abstract class BaseService {
             let result: ResponseResult;
 
             //通过http从服务端获取数据
-            this.http.put(this.url, JSON.stringify(record), {headers: headers})
+            this.http.put(this.url + '/' + record.id, JSON.stringify(record), {headers: headers})
                 .map(res => <ResponseResult> res.json())
                 .subscribe(
                     resResult => {
+                        console.log(resResult);
                         result = resResult;
                         const updatedRecord = Object.assign({}, resResult.data);
                         const records = [
