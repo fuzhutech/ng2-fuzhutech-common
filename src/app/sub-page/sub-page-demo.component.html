@@ -1,7 +1,7 @@
 <fz-toolbar [disabledView]="!selectedRecord" (onViewClick)="handleView()" (onAddClick)="handleAdd()"
             [disabledEdit]="!selectedRecord" (onEditClick)="handleEdit()"
             [disabledDelete]="!selectedRecord" (onDeleteClick)="handleDelete()"
-            (onRefreshClick)="handleRefresh()"
+            (onRefreshClick)="handleRefresh()" (onImportClick)="handleImport()" (onExportClick)="handleExport()"
             [menuId]="currentMenuId" [authInfo]="currentAuthInfo" [menuInfo]="currentMenuInfo">
 
     <button md-button>
