@@ -24,8 +24,6 @@ export abstract class BaseService {
         this.http = http;
         this.url = this.host_api + '/' + path;
 
-        //this.getConfigInfo().then(data => console.log(data));
-
         this.dataStore = {records: [], message: null};
         this._records = new BehaviorSubject<any[]>([]);
         this._message = new BehaviorSubject<string>(null);
@@ -47,12 +45,6 @@ export abstract class BaseService {
     public set message(value: string) {
         this.dataStore.message = value;
         this._message.next(Object.assign({}, this.dataStore).message);
-    }
-
-    public getConfigInfo() {
-        return this.http.get('assets/data/files.json')
-            .toPromise()
-            .then(res => res.json().data);
     }
 
     /**

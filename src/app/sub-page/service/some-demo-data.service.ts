@@ -64,7 +64,8 @@ export class SomeDemoDataOverrideService extends SomeDemoDataService {
         const body = JSON.stringify(response.body);
         console.log(`responseInterceptor: ${method} ${reqInfo.req.url}: \n${body}`);
 
-        response.body = Object.assign(response.body, {status: 1, message: ''});
+        //if (body != null)
+        response.body = Object.assign({status: 1, message: ''}, response.body);
 
         return response;
     }

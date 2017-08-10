@@ -148,6 +148,29 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
     }
 
     /**
+     * 设置选中记录
+     * @param {number} id
+     */
+    protected setSelectedRecord(id: number) {
+        for (const record of this.records) {
+            if (record.id === id) {
+                this.selectedRecord = record;
+                break;
+            }
+        }
+
+        //若为树表展示
+        if (this.useTreeTable) {
+            for (const node of this.treeTableService.nodes) {
+                if (node.id === id) {
+                    this.treeTableService.selectedNode = node;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
      * 复制当前选中数据记录
      * @returns {{}&U}
      */
@@ -341,7 +364,8 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
                 dialogRef = null;
 
                 if (result.success) {
-                    this.doRefresh(result.recordId);
+                    //this.doRefresh(result.recordId);
+                    this.setSelectedRecord(result.recordId);
                 }
             });
         }
@@ -355,7 +379,8 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
             dialogRef.afterClosed().subscribe((result: DialogResult) => {
                 dialogRef = null;
                 if (result.success) {
-                    this.doRefresh(result.recordId);
+                    //this.doRefresh(result.recordId);
+                    this.setSelectedRecord(result.recordId);
                 }
             });
         }
@@ -380,9 +405,9 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
         //关闭对话框后执行动作
         dialogRef.afterClosed().subscribe((result: DialogResult) => {
             dialogRef = null;
-            if (result.success) {
+            /*if (result.success) {
                 this.doRefresh(null);
-            }
+            }*/
         });
     }
 
@@ -646,7 +671,6 @@ export class ComponentDialog<D, R, S extends BaseService> implements BaseDialog 
 
     //按钮-确认
     handleConfirm() {
-        console.log(this.confirmProcess);
         this.progress = true;
         const observable: Observable<any> = this.confirmProcess.doConfirm(this.record);
         if (observable == null) {
