@@ -1,4 +1,4 @@
-import {Headers, Http, URLSearchParams} from '@angular/http';
+import {Headers, Http, URLSearchParams, RequestOptions} from '@angular/http';
 import {HOST_API_PATH, HOST_PATH} from '../../utils/constant';
 import {ResponseResult} from '../index';
 //import 'rxjs/add/operator/toPromise';
@@ -45,6 +45,10 @@ export abstract class BaseService {
     public set message(value: string) {
         this.dataStore.message = value;
         this._message.next(Object.assign({}, this.dataStore).message);
+    }
+
+    public get importUrl() {
+        return this.url + '/import';
     }
 
     /**
@@ -228,6 +232,46 @@ export abstract class BaseService {
                 );
         });
 
+    }
+
+    public export() {
+        console.log('export');
+
+        const headers = new Headers({'token': 'testToken'});
+        const options = new RequestOptions({headers: headers, responseType: 3});
+        const record = {id: 1};
+        this.http.post(this.url + '/export', JSON.stringify(record), options).map(res => res.json()).subscribe(
+            data => {
+                this.saveExcel(data);
+            }
+        );
+    }
+
+    protected saveExcel(excel) {
+        const exportFilename = 'test';
+
+        const blob = new Blob([excel], {type: 'application/vnd.ms-excel'});
+
+        if (window.navigator.msSaveOrOpenBlob) { // For IE:
+            navigator.msSaveOrOpenBlob(blob, exportFilename + '.csv');
+        } else {
+            const objectUrl = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            if (link.download !== undefined) {
+                //link.setAttribute('href', URL.createObjectURL(blob));
+                link.setAttribute('href', objectUrl);
+                link.setAttribute('download', exportFilename + '.xls');
+                link.click();
+            } else {
+                window.open(objectUrl);
+            }
+            document.body.removeChild(link);
+
+            URL.revokeObjectURL(objectUrl);
+        }
     }
 
     /**

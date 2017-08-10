@@ -24,6 +24,16 @@
         <md-icon>loop</md-icon>
         刷新
     </button>
+    <button *ngIf="visibleImport" md-button (click)="importClick($event)"
+            [disabled]="disabledImport || enableImportRight && !hasImportRight">
+        <md-icon>arrow_upward</md-icon>
+        导入
+    </button>
+    <button *ngIf="visibleExport" md-button (click)="exportClick($event)"
+            [disabled]="disabledExport || enableExportRight && !hasExportRight">
+        <md-icon>arrow_downward</md-icon>
+        导出
+    </button>
 
     <ng-content></ng-content>
 </md-toolbar>

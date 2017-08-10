@@ -1,0 +1,85 @@
+<form novalidate #userForm="ngForm" style="min-width: 760px">
+    <md-toolbar md-dialog-title color="primary">上传文件</md-toolbar>
+
+    <md-dialog-content>
+        <div>
+            <button md-button style="position: relative;overflow: hidden;" (click)="onChooseClick($event, fileinput)">
+                选择文件
+                <input #fileinput type="file" style="display: none;" (change)="selectedFileOnChanged($event)" ng2FileSelect
+                       [uploader]="uploader" multiple="true"/>
+            </button>
+
+            <button md-button (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">上传全部</button>
+            <button md-button (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">取消全部</button>
+            <button md-button (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">清除全部</button>
+        </div>
+
+        <div>
+            <p>队列长度:{{ uploader?.queue?.length }}</p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">文件名</th>
+                    <th>大小</th>
+                    <th>进度</th>
+                    <th>状态</th>
+                    <th>动作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <!--td-- *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td-->
+                    <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <!--td *ngIf="uploader.isHTML5">
+                      <div class="progress" style="margin-bottom: 0;">
+                        <md-progress-bar mode="determinate" [value]="item.progress" [color]="primary"></md-progress-bar>
+                        <!--div-- class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div-->
+                    <!--/div>
+                  </td-->
+                    <td>
+                        <div class="progress" style="margin-bottom: 0;">
+                            <md-progress-bar mode="determinate" [value]="item.progress" [color]="primary"></md-progress-bar>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span *ngIf="item.isSuccess"><md-icon>done</md-icon></span>
+                        <span *ngIf="item.isCancel"><md-icon>error</md-icon></span>
+                        <span *ngIf="item.isError"><md-icon>stop</md-icon></span>
+                    </td>
+                    <td nowrap>
+                        <button type="button"
+                                (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            上传
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs"
+                                (click)="item.cancel()" [disabled]="!item.isUploading">
+                            取消
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs"
+                                (click)="item.remove()">
+                            移除
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-bottom: 40px">
+            <br/>
+            <p>上传队列进度:</p>
+            <md-progress-bar mode="determinate" [value]="uploader.progress" [color]="primary"></md-progress-bar>
+        </div>
+    </md-dialog-content>
+
+    <!--md-dialog-actions *ngIf="progress" [attr.align]="actionsAlignment">
+        <md-progress-bar mode="indeterminate" color="primary" style="width: 100%"></md-progress-bar>
+    </md-dialog-actions-->
+
+    <md-dialog-actions [attr.align]="actionsAlignment">
+        <!--button md-raised-button color="primary" (click)="handleReset(userForm)">重置</button-->
+        <button md-raised-button color="primary" (click)="handleConfirm()" [disabled]="userForm.invalid">确认</button>
+        <button md-raised-button color="primary" (click)="handleCancel()">取消</button>
+    </md-dialog-actions>
+</form>

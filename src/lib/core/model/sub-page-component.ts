@@ -5,7 +5,7 @@ import {Http, Headers, URLSearchParams, Request, Response} from '@angular/http';
 import {Observable, Subscription} from 'rxjs/Rx';
 
 import {MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA, ComponentType} from '@angular/material';
-import {ConfirmDialogComponent} from '../../index';
+import {ConfirmDialogComponent, UploadDialogComponent} from '../../index';
 import {isUndefined} from 'util';
 
 import {BaseService, DialogResult, ConfirmProcess, ResponseResult} from '../../index';
@@ -18,7 +18,9 @@ export const enum ActionType {
     editAction = 2,
     deleteAction = 3,
     refreshAction = 4,
-    lookupAction = 5
+    lookupAction = 5,
+    exportAction = 6,
+    importAction = 7
 }
 
 export interface BaseObject {
@@ -323,113 +325,48 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
 
     abstract oPenDialog(actionName: string): MdDialogRef<any>;
 
-    protected getActionName(action): string {
-        if (action == ActionType.viewAction) {
-            return '查看';
-        } else if (action == ActionType.newAction) {
-            return '新增';
-        } else if (action == ActionType.editAction) {
-            return '编辑';
+    /**
+     * 是否具备执行“新增”动作的条件
+     * @returns {boolean}
+     */
+    protected canDoAdd(): boolean {
+        return true;
+    }
+
+    //删除
+    protected canDoDelete(): boolean {
+        if (this.useTreeTable) {
+            return !isUndefined(this.treeTableService) && !isUndefined(this.treeTableService.selectedNode);
         } else {
-            return;
-        }
-    }
-
-    oPenBaseDialog<T extends BaseDialog>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, record, actionName) {
-        const dialogRef: MdDialogRef<T> = this.dialog.open(componentOrTemplateRef, this.dialogConfig);
-        dialogRef.componentInstance.record = record;
-        dialogRef.componentInstance.dialogHeader = this.mainHeader + '--' + actionName;
-        dialogRef.componentInstance.action = this.action;
-        dialogRef.componentInstance.service = this.service;
-        dialogRef.componentInstance.confirmProcess = this;
-
-        return dialogRef;
-    }
-
-    /**
-     * “查看”按钮处理响应
-     */
-    handleView() {
-        if (this.canDoView() && this.initViewParams()) {
-            this.oPenDialog('--查看');
-        }
-    }
-
-    handleAdd() {
-        if (this.canDoAdd() && this.initAddParams()) {
-            let dialogRef = this.oPenDialog('--新增');
-
-            //关闭对话框后进行,刷新
-            dialogRef.afterClosed().subscribe((result: DialogResult) => {
-                dialogRef = null;
-
-                if (result.success) {
-                    //this.doRefresh(result.recordId);
-                    this.setSelectedRecord(result.recordId);
-                }
-            });
-        }
-    }
-
-    handleEdit() {
-        if (this.canDoEdit() && this.initEditParams()) {
-            let dialogRef = this.oPenDialog('--编辑');
-
-            //关闭对话框后进行,刷新
-            dialogRef.afterClosed().subscribe((result: DialogResult) => {
-                dialogRef = null;
-                if (result.success) {
-                    //this.doRefresh(result.recordId);
-                    this.setSelectedRecord(result.recordId);
-                }
-            });
+            return !isUndefined(this.selectedRecord);
         }
     }
 
     /**
-     * “删除”按钮处理响应
-     * @param event
+     * 是否具备执行“编辑”动作的条件
+     * @returns {boolean}
      */
-    handleDelete(event) {
-        if (!this.canDoDelete()) {
-            return;
+    protected canDoEdit(): boolean {
+        if (this.useTreeTable) {
+            return !isUndefined(this.treeTableService) && !isUndefined(this.treeTableService.selectedNode);
+        } else {
+            return !isUndefined(this.selectedRecord);
         }
-
-        this.action = ActionType.deleteAction;
-
-        //弹出对话框，确认是否删除
-        let dialogRef: MdDialogRef<ConfirmDialogComponent> = this.dialog.open(ConfirmDialogComponent, this.dialogConfig);
-        dialogRef.componentInstance.messages = this.getDeleteMessage();
-        dialogRef.componentInstance.confirmProcess = this;
-
-        //关闭对话框后执行动作
-        dialogRef.afterClosed().subscribe((result: DialogResult) => {
-            dialogRef = null;
-            /*if (result.success) {
-                this.doRefresh(null);
-            }*/
-        });
     }
 
-    protected initViewParams(): boolean {
-
-        this.action = ActionType.viewAction;
-        this.record = this.getCloneRecord();
-
+    /**
+     * 是否具备执行“导出”动作的条件
+     * @returns {boolean}
+     */
+    protected canDoExport(): boolean {
         return true;
     }
 
-    protected initAddParams(): boolean {
-        this.action = ActionType.newAction;
-        this.record = this.newInstance();
-
-        return true;
-    }
-
-    protected initEditParams(): boolean {
-        this.action = ActionType.editAction;
-        this.record = this.getCloneRecord();
-
+    /**
+     * 是否具备执行“导入”动作的条件
+     * @returns {boolean}
+     */
+    protected canDoImport(): boolean {
         return true;
     }
 
@@ -446,31 +383,22 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
     }
 
     /**
-     * 是否具备执行“新增”动作的条件
-     * @returns {boolean}
-     */
-    protected canDoAdd(): boolean {
-        return true;
-    }
-
-    /**
-     * 是否具备执行“编辑”动作的条件
-     * @returns {boolean}
-     */
-    protected canDoEdit(): boolean {
-        if (this.useTreeTable) {
-            return !isUndefined(this.treeTableService) && !isUndefined(this.treeTableService.selectedNode);
-        } else {
-            return !isUndefined(this.selectedRecord);
-        }
-    }
-
-    /**
      * 执行“新增”动作
      * @returns {Observable<R>}
      */
     protected doAdd(): Observable<ResponseResult> {
         return this.service.addItem(this.record);
+    }
+
+    protected doDelete(): Observable<any> {
+        let data;
+        if (this.useTreeTable) {
+            data = this.treeTableService.selectedNode.data;
+        } else {
+            data = this.selectedRecord;
+        }
+
+        return this.service.deleteItem(data);
     }
 
     /**
@@ -522,6 +450,18 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
         return observable;
     }
 
+    protected getActionName(action): string {
+        if (action == ActionType.viewAction) {
+            return '查看';
+        } else if (action == ActionType.newAction) {
+            return '新增';
+        } else if (action == ActionType.editAction) {
+            return '编辑';
+        } else {
+            return;
+        }
+    }
+
     protected getDeleteMessage(): string[] {
         const message = [];
         message.push(this.mainHeader + '记录');
@@ -534,24 +474,135 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
         return message;
     };
 
-    //删除
-    protected canDoDelete(): boolean {
-        if (this.useTreeTable) {
-            return !isUndefined(this.treeTableService) && !isUndefined(this.treeTableService.selectedNode);
-        } else {
-            return !isUndefined(this.selectedRecord);
+    /**
+     * “删除”按钮处理响应
+     */
+    handleAdd() {
+        if (this.canDoAdd() && this.initAddParams()) {
+            let dialogRef = this.oPenDialog('--新增');
+
+            //关闭对话框后进行,刷新
+            dialogRef.afterClosed().subscribe((result: DialogResult) => {
+                dialogRef = null;
+
+                if (result.success) {
+                    //this.doRefresh(result.recordId);
+                    this.setSelectedRecord(result.recordId);
+                }
+            });
         }
     }
 
-    doDelete(): Observable<any> {
-        let data;
-        if (this.useTreeTable) {
-            data = this.treeTableService.selectedNode.data;
-        } else {
-            data = this.selectedRecord;
+    /**
+     * “删除”按钮处理响应
+     */
+    handleDelete(event) {
+        if (!this.canDoDelete()) {
+            return;
         }
 
-        return this.service.deleteItem(data);
+        this.action = ActionType.deleteAction;
+
+        //弹出对话框，确认是否删除
+        let dialogRef: MdDialogRef<ConfirmDialogComponent> = this.dialog.open(ConfirmDialogComponent, this.dialogConfig);
+        dialogRef.componentInstance.messages = this.getDeleteMessage();
+        dialogRef.componentInstance.confirmProcess = this;
+
+        //关闭对话框后执行动作
+        dialogRef.afterClosed().subscribe((result: DialogResult) => {
+            dialogRef = null;
+            /*if (result.success) {
+                this.doRefresh(null);
+            }*/
+        });
+    }
+
+    handleEdit() {
+        if (this.canDoEdit() && this.initEditParams()) {
+            let dialogRef = this.oPenDialog('--编辑');
+
+            //关闭对话框后进行,刷新
+            dialogRef.afterClosed().subscribe((result: DialogResult) => {
+                dialogRef = null;
+                if (result.success) {
+                    //this.doRefresh(result.recordId);
+                    this.setSelectedRecord(result.recordId);
+                }
+            });
+        }
+    }
+
+    handleExport(event) {
+        if (!this.canDoExport()) {
+            return;
+        }
+
+        this.action = ActionType.exportAction;
+
+        return this.service.export();
+    }
+
+    handleImport(event) {
+        if (!this.canDoImport()) {
+            return;
+        }
+
+        this.action = ActionType.importAction;
+
+        //弹出对话框，确认是否删除
+        let dialogRef: MdDialogRef<UploadDialogComponent> = this.dialog.open(UploadDialogComponent, this.dialogConfig);
+        dialogRef.componentInstance.url = this.service.importUrl;
+        //dialogRef.componentInstance.confirmProcess = this;
+
+        //关闭对话框后执行动作
+        dialogRef.afterClosed().subscribe((result: DialogResult) => {
+            dialogRef = null;
+            /*if (result.success) {
+                this.doRefresh(null);
+            }*/
+        });
+    }
+
+    /**
+     * “查看”按钮处理响应
+     */
+    handleView() {
+        if (this.canDoView() && this.initViewParams()) {
+            this.oPenDialog('--查看');
+        }
+    }
+
+    protected initViewParams(): boolean {
+
+        this.action = ActionType.viewAction;
+        this.record = this.getCloneRecord();
+
+        return true;
+    }
+
+    protected initAddParams(): boolean {
+        this.action = ActionType.newAction;
+        this.record = this.newInstance();
+
+        return true;
+    }
+
+    protected initEditParams(): boolean {
+        this.action = ActionType.editAction;
+        this.record = this.getCloneRecord();
+
+        return true;
+    }
+
+    protected oPenBaseDialog<T extends BaseDialog>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, record, actionName) {
+        const dialogRef: MdDialogRef<T> = this.dialog.open(componentOrTemplateRef, this.dialogConfig);
+        dialogRef.componentInstance.record = record;
+        dialogRef.componentInstance.dialogHeader = this.mainHeader + '--' + actionName;
+        dialogRef.componentInstance.action = this.action;
+        dialogRef.componentInstance.service = this.service;
+        dialogRef.componentInstance.confirmProcess = this;
+
+        return dialogRef;
     }
 
 

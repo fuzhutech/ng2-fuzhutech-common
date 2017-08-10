@@ -13,6 +13,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     private enableAddRight = false;
     private enableDeleteRight = false;
     private enableEditRight = false;
+    private enableExportRight = false;
+    private enableImportRight = false;
     private enableRefreshRight = false;
     private enableCloseRight = false;
 
@@ -20,6 +22,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     private hasAddRight = false;
     private hasDeleteRight = false;
     private hasEditRight = false;
+    private hasExportRight = false;
+    private hasImportRight = false;
     private hasRefreshRight = false;
     private hasCloseRight = false;
 
@@ -27,6 +31,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     @Input() visibleAdd = true;
     @Input() visibleDelete = true;
     @Input() visibleEdit = true;
+    @Input() visibleExport = true;
+    @Input() visibleImport = true;
     @Input() visibleRefresh = true;
     @Input() visibleClose = true;
 
@@ -34,6 +40,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     @Input() disabledAdd = false;
     @Input() disabledDelete = false;
     @Input() disabledEdit = false;
+    @Input() disabledExport = false;
+    @Input() disabledImport = false;
     @Input() disabledRefresh = false;
     @Input() disabledClose = false;
 
@@ -166,11 +174,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     }
 
     importClick(event: Event) {
-        this.onEditClick.next({originalEvent: event});
+        this.onImportClick.next({originalEvent: event});
     }
 
     exportClick(event: Event) {
-        this.onEditClick.next({originalEvent: event});
+        this.onExportClick.next({originalEvent: event});
     }
 
     printClick(event: Event) {
@@ -180,6 +188,5 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
     closeClick(event: Event) {
         this.onEditClick.next({originalEvent: event});
     }
-
 
 }
