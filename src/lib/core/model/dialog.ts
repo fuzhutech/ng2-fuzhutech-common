@@ -21,7 +21,7 @@ export interface BaseDialog {
 
 export interface ConfirmProcess {
     //doProgress(): Observable<ResponseResult>;
-    doConfirm(record): Observable<ResponseResult>;
+    doConfirm(record?: any): Observable<ResponseResult>;
 }
 
 export interface DialogResult {

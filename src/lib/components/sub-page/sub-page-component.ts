@@ -344,7 +344,7 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
         } else if (this.action == ActionType.editAction) {
             observable = this.doEdit();
         } else if (this.action == ActionType.deleteAction) {
-            observable = this.doEdit();
+            observable = this.doDelete();
         } else {
             /*const dialogResult: DialogResult = {'success': false, 'cancel': false};
              this.dialogRef.close(dialogResult);*/

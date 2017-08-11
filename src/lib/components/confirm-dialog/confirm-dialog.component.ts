@@ -30,7 +30,7 @@ export class ConfirmDialogComponent implements BaseDialog {
     //按钮-确认
     confirm() {
         this.progress = true;
-        const observable: Observable<any> = this.confirmProcess.doProgress();
+        const observable: Observable<any> = this.confirmProcess.doConfirm();
 
         observable.subscribe(
             data => {
