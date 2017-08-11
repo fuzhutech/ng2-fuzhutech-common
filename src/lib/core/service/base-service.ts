@@ -71,11 +71,9 @@ export abstract class BaseService {
                             console.log(data);
                             this.records = data.data;
 
-                            //设置返回Observable
-                            observer.next(this.dataStore.records);
-                            observer.complete();
+                            this.handleSuccess(observer, this.dataStore.records);
                         },
-                        error => this.handleError(observer, error),
+                        error => this.handleError(observer, error, []),
                         () => console.log('getList Complete')
                     );
             });
@@ -107,9 +105,7 @@ export abstract class BaseService {
                         data => {
                             this.records = data;
 
-                            //设置返回Observable
-                            observer.next(this.dataStore.records);
-                            observer.complete();
+                            this.handleSuccess(observer, this.dataStore.records);
                         },
                         error => this.handleError(observer, error),
                         () => console.log('getListByPageInfo Complete')
@@ -140,9 +136,7 @@ export abstract class BaseService {
 
                         this.records = [...this.dataStore.records, resResult.data];
 
-                        //设置返回Observable
-                        observer.next(result);
-                        observer.complete();
+                        this.handleSuccess(observer, result);
                     },
                     error => this.handleError(observer, error),
                     () => console.log('create Complete')
@@ -181,9 +175,7 @@ export abstract class BaseService {
                         ];
                         this.records = records;
 
-                        //设置返回Observable
-                        observer.next(result);
-                        observer.complete();
+                        this.handleSuccess(observer, updatedRecord);
                     },
                     error => this.handleError(observer, error),
                     () => console.log('editItem Complete')
@@ -223,9 +215,7 @@ export abstract class BaseService {
                         ];
                         this.records = records;
 
-                        //设置返回Observable
-                        observer.next(result);
-                        observer.complete();
+                        this.handleSuccess(observer, result);
                     },
                     error => this.handleError(observer, error),
                     () => console.log('create Complete')
@@ -279,19 +269,35 @@ export abstract class BaseService {
      * @param observer
      * @param error
      */
-    protected handleError(observer, error): void {
+    protected handleError(observer, error, data = null): void {
         console.log('请求服务失败:', error);
 
-        let msg = '请求失败';
+        let msg = '服务请求失败:';
         if (error.status == 400) {
-            msg = '请求参数正确';
+            msg += '请求参数正确';
         } else if (error.status == 404) {
-            msg = '请检查路径是否正确';
+            msg += '请检查路径是否正确';
         } else if (error.status == 500) {
-            msg = '请求的服务器错误';
+            msg += '请求的服务器错误';
         }
-        const result: ResponseResult = {status: -1, message: msg, data: null};
+        const result: ResponseResult = {status: -1, message: msg, data: data};
         this.message = msg;
+
+        observer.next(result);
+        observer.complete();
+    }
+
+    /**
+     * 请求服务处理成功统一处理函数
+     * @param observer
+     * @param error
+     * @param {any} data
+     */
+    protected handleSuccess(observer, data = null, message = ''): void {
+        console.log('请求服务成功:' + message);
+
+        const result: ResponseResult = {status: 1, message: message, data: data};
+        this.message = message;
 
         observer.next(result);
         observer.complete();

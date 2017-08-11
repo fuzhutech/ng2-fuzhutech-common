@@ -30,19 +30,8 @@ export class ComponentDialog<D, R, S extends BaseService> implements BaseDialog 
 
     confirmProcess: ConfirmProcess;
 
-    //refreshAction:(event:Event)=>void;
-
     constructor(_dialogRef: MdDialogRef<D>) {
         this.dialogRef = _dialogRef;
-    }
-
-    doAdd(): Observable<ResponseResult> {
-        return this.service.addItem(this.record);
-    }
-
-    //编辑
-    doEdit() {
-        return this.service.editItem(this.record);
     }
 
     //按钮-确认
@@ -54,7 +43,7 @@ export class ComponentDialog<D, R, S extends BaseService> implements BaseDialog 
         }
 
         observable.subscribe(
-            responseResult => {
+            (responseResult: ResponseResult) => {
 
                 if (responseResult.status == -1) {
                     return;
@@ -65,13 +54,10 @@ export class ComponentDialog<D, R, S extends BaseService> implements BaseDialog 
                 this.progress = false;
             },
             err => {
-                console.log('出错');
-                console.log(err);
+                console.log('出错', err);
                 this.progress = false;
-            },
-            () => console.log('confirm Complete')
+            }
         );
-        //this.record = null;
     }
 
     //按钮-取消

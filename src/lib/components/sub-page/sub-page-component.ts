@@ -87,7 +87,10 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
         //获取记录
         this.recordSubscription = this.service.records$
             .subscribe(
-                data => this.records = data
+                data => {
+                    console.log(data);
+                    this.records = data;
+                }
             );
     }
 
@@ -133,8 +136,9 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
      */
     doRefresh(id: number) {
         this.service.getList().subscribe(
-            data => {
-                this.records = data;
+            (resResult: ResponseResult) => {
+
+                this.records = resResult.data;
 
                 for (const record of this.records) {
                     if (record.id == id) {
@@ -327,6 +331,11 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
         return this.service.editItem(this.record);
     }
 
+    /**
+     * 执行"确认"按钮动作
+     * @param record
+     * @returns {Observable<ResponseResult>}
+     */
     doConfirm(record: any): Observable<ResponseResult> {
         let observable: Observable<ResponseResult>;
 
@@ -336,29 +345,6 @@ export abstract class SubPageComponentWithDialog<R extends BaseObject, S extends
             observable = this.doEdit();
         } else if (this.action == ActionType.deleteAction) {
             observable = this.doEdit();
-        } else {
-            /*const dialogResult: DialogResult = {'success': false, 'cancel': false};
-             this.dialogRef.close(dialogResult);*/
-            return;
-        }
-
-        return observable;
-    }
-
-    /**
-     * 执行“新增”动作
-     * @returns {Observable<R>}
-     */
-    doProgress(): Observable<ResponseResult> {
-
-        let observable: Observable<ResponseResult>;
-
-        if (this.action == ActionType.newAction) {
-            observable = this.doAdd();
-        } else if (this.action == ActionType.editAction) {
-            observable = this.doEdit();
-        } else if (this.action == ActionType.deleteAction) {
-            observable = this.doDelete();
         } else {
             /*const dialogResult: DialogResult = {'success': false, 'cancel': false};
              this.dialogRef.close(dialogResult);*/
