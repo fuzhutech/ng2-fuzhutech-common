@@ -1,31 +1,27 @@
 import {Component, Inject, TemplateRef, ViewChild, Input, OnInit, OnDestroy} from '@angular/core';
-import {DOCUMENT} from '@angular/platform-browser';
-import {TreeNode} from 'primeng/primeng';
-import {Http, Headers, URLSearchParams, Request, Response} from '@angular/http';
+//import {DOCUMENT} from '@angular/platform-browser';
+//import {Http, Headers, URLSearchParams, Request, Response} from '@angular/http';
 import {Observable, Subscription} from 'rxjs/Rx';
 
 import {MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA, ComponentType} from '@angular/material';
 import {ConfirmDialogComponent, UploadDialogComponent} from '../../index';
 import {isUndefined} from 'util';
 
-import {BaseService, DialogResult, ConfirmProcess, ResponseResult} from '../../index';
-import {AuthInfo, AuthInfoService, MenuInfo} from '../auth-info';
+import {AuthInfo, AuthInfoService, MenuInfo} from '../../core/auth-info';
+
+import {
+    ActionType,
+    BaseObject,
+    BaseDialog,
+    DialogResult,
+    ConfirmProcess,
+    ResponseResult
+} from '../../core/model';
+
+import {BaseService} from '../../core/service';
+
 import {ServiceUtil} from '../../utils';
-
-export const enum ActionType {
-    viewAction = 0,
-    newAction = 1,
-    editAction = 2,
-    deleteAction = 3,
-    refreshAction = 4,
-    lookupAction = 5,
-    exportAction = 6,
-    importAction = 7
-}
-
-export interface BaseObject {
-    id?: any;
-}
+import {TreeTableService} from './tree-table.service';
 
 /**
  * 仅具有“刷新”展示功能，不具备“增删改”功能
@@ -35,9 +31,9 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
     /*普通表格展示相关变量*/
     record: R;             //临时变量
     selectedRecord: R;    //选中记录
-    selectedRecord$: Observable<R>;    //选中记录
     records: R[];          //数据列表
     records$: Observable<R[]>; //数据列表可观察对象, 所有可观察对象变量均以$结尾表示
+    recordSubscription: Subscription;
 
     /*http服务*/
     service: S;
@@ -87,6 +83,12 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
                 data => this.setAuthInfo(data),
                 error => console.error(error)
             );
+
+        //获取记录
+        this.recordSubscription = this.service.records$
+            .subscribe(
+                data => this.records = data
+            );
     }
 
     /**
@@ -99,6 +101,10 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
 
         if (this.menuInfoSubscription !== undefined) {
             this.menuInfoSubscription.unsubscribe();
+        }
+
+        if (this.recordSubscription !== undefined) {
+            this.recordSubscription.unsubscribe();
         }
     }
 
@@ -195,94 +201,6 @@ export class SubPageComponent<R extends BaseObject, S extends BaseService> imple
         this.currentMenuInfo = menuInfo;
     }
 
-}
-
-export interface BaseTreeObject {
-    id?: any;
-    parentId?: any;
-}
-
-export class BaseTreeNode implements TreeNode {
-    label?: string;
-    data?: any;
-    icon?: any;
-    expandedIcon?: any;
-    collapsedIcon?: any;
-    children?: TreeNode[];
-    leaf?: boolean;
-    expanded?: boolean;
-    type?: string;
-    parent?: TreeNode;
-    partialSelected?: boolean;
-
-    id: number;
-}
-
-export class TreeTableService {
-
-    selectedNode: BaseTreeNode;       //选中记录--树
-    nodes: BaseTreeNode[];        //数据列表-树
-    records: BaseTreeObject[];
-
-    public refreshTreeNode(id: number) {
-        //this.records = data.rows;
-        this.nodes = [];
-        //第一遍，只处理pid==null
-        for (let record of this.records) {
-            if (record.parentId == null) {
-                const treeNode: BaseTreeNode = new BaseTreeNode();
-                treeNode.data = record;
-                treeNode.id = record.id;
-                this.nodes.push(treeNode);
-                //处理过则去除
-                record = null;
-            }
-        }
-
-        this.doSet(this.nodes);
-
-        for (const node of this.nodes) {
-            if (node.id == id) {
-                this.selectedNode = node;
-                break;
-            }
-        }
-    }
-
-    //第三遍
-    //TreeNodes1 = TreeNodes3;  //上一遍的筛选记录
-    private doSet(TreeNodes1: BaseTreeNode[]) {
-
-        const TreeNodes3: BaseTreeNode[] = []; //这一遍筛选记录
-
-        for (const treeNode1 of TreeNodes1) {
-            //从records中查找该级别子节点
-            for (let record of this.records) {
-                if (record == null) {
-                    continue;
-                }
-
-                if (record.parentId == treeNode1.id) {
-                    if (treeNode1.children == null) {
-                        treeNode1.children = [];
-                    }
-
-                    const treeNode: BaseTreeNode = new BaseTreeNode();
-                    treeNode.data = record;
-                    treeNode.id = record.id;
-                    treeNode1.children.push(treeNode);
-                    TreeNodes3.push(treeNode);
-
-                    //处理过则去除
-                    record = null;
-                }
-            }
-        }
-
-        if (TreeNodes3.length > 0) {
-            this.doSet(TreeNodes3);
-        }
-    };
 }
 
 /**
@@ -678,81 +596,4 @@ export abstract class SubPageComponentWithComponentDialog<O extends BaseObject, 
 
 }
 
-export interface BaseDialog {
-    record: any;
-    dialogHeader: string;
-    action: any;
-    service: any;
-    confirmProcess: ConfirmProcess;
-}
 
-export interface DialogResult {
-    success: boolean;
-    cancel?: boolean;
-    recordId?: number;
-}
-
-export class ComponentDialog<D, R, S extends BaseService> implements BaseDialog {
-    actionsAlignment = 'end';
-    progress = false;
-    dialogHeader: string;  //编辑页面标题
-
-    action: ActionType;
-    service: S;
-
-    dialogRef: MdDialogRef<D>;
-    record: R;        //临时变量
-
-    confirmProcess: ConfirmProcess;
-
-    //refreshAction:(event:Event)=>void;
-
-    constructor(_dialogRef: MdDialogRef<D>) {
-        this.dialogRef = _dialogRef;
-    }
-
-    doAdd(): Observable<ResponseResult> {
-        return this.service.addItem(this.record);
-    }
-
-    //编辑
-    doEdit() {
-        return this.service.editItem(this.record);
-    }
-
-    //按钮-确认
-    handleConfirm() {
-        this.progress = true;
-        const observable: Observable<any> = this.confirmProcess.doConfirm(this.record);
-        if (observable == null) {
-            return;
-        }
-
-        observable.subscribe(
-            responseResult => {
-
-                if (responseResult.status == -1) {
-                    return;
-                }
-
-                const dialogResult: DialogResult = {'success': true, 'recordId': responseResult.data.id};
-                this.dialogRef.close(dialogResult);
-                this.progress = false;
-            },
-            err => {
-                console.log('出错');
-                console.log(err);
-                this.progress = false;
-            },
-            () => console.log('confirm Complete')
-        );
-        //this.record = null;
-    }
-
-    //按钮-取消
-    handleCancel() {
-        const dialogResult: DialogResult = {'success': false, 'cancel': false};
-        this.dialogRef.close(dialogResult);
-    }
-
-}

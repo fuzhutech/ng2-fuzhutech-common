@@ -1,8 +1,8 @@
+//import {DOCUMENT} from '@angular/platform-browser';
 import {Headers, Http, URLSearchParams, RequestOptions} from '@angular/http';
 import {HOST_API_PATH, HOST_PATH} from '../../utils/constant';
-import {ResponseResult} from '../index';
-//import 'rxjs/add/operator/toPromise';
-//import 'rxjs/add/operator/map';
+import {ResponseResult} from '../model/response-result.model';
+import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 

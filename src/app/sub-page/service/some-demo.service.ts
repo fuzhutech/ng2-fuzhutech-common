@@ -4,7 +4,7 @@ import {Observable, Subscription} from 'rxjs/Rx';
 import {BaseService} from '../../ng2-fuzhutech-common';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-import {ResponseResult} from '../../../lib/core/response-result-model';
+import {ResponseResult} from '../../../lib/core/model/response-result.model';
 
 @Injectable()
 export class SomeDemoService extends BaseService {

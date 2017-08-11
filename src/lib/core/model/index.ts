@@ -1,2 +1,3 @@
-export * from './main-page-component';
-export * from './sub-page-component';
+export * from './dialog';
+export * from './response-result.model';
+export * from './sub-page';
