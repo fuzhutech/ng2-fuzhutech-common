@@ -1,43 +1,45 @@
 <!--begin of 顶部工具栏-->
 <md-toolbar color="primary" style="position: fixed;z-index: 10;">
-  <button class="app-icon-button" (click)="sidenav.toggle()">
-    <i class="material-icons app-toolbar-menu">menu</i>
-  </button>
+    <button class="app-icon-button" (click)="sidenav.toggle()">
+        <i class="material-icons app-toolbar-menu">menu</i>
+    </button>
 
-  <a md-button routerLink="home">
-    主页
-  </a>
-  <a md-button routerLink="tab-page">
-    标签式页面
-  </a>
-  <span class="app-toolbar-filler"></span>
-  <span>
+    <a md-button routerLink="home">
+        主页
+    </a>
+    <a md-button routerLink="tab-page">
+        标签式页面
+    </a>
+    <span class="app-toolbar-filler"></span>
+    <span>
     <a *ngIf="!authInfoService.currentAuthUser" md-button routerLink="login">登录</a>
     <button *ngIf="authInfoService.currentAuthUser" md-button (click)="doLogout()">注销</button>
   </span>
-  <span>
+    <span>
       <md-icon class="icon-20">pets</md-icon>
       FuzhuTech
   </span>
-  <button md-icon-button [md-menu-trigger-for]="menu">
-    <md-icon>more_vert</md-icon>
-  </button>
+    <button md-icon-button [md-menu-trigger-for]="menu">
+        <md-icon>more_vert</md-icon>
+    </button>
 </md-toolbar>
 <md-menu x-position="before" #menu="mdMenu">
-  <button md-menu-item>Settings</button>
-  <button md-menu-item (click)="isDarkTheme=!isDarkTheme">Toggle theme</button>
-  <button md-menu-item>Help</button>
+    <button md-menu-item>Settings</button>
+    <button md-menu-item (click)="isDarkTheme=!isDarkTheme">Toggle theme</button>
+    <button md-menu-item>Help</button>
 </md-menu>
 <!--end of 顶部工具栏-->
 
 <md-sidenav-container style="height: calc(100% - 64px);padding-top: 64px"><!--style="height: calc(100% - 66px);"-->
-  <md-sidenav #sidenav mode="side" class="app-sidenav" style="padding-top: 64px;">
-    <div>
-      主页面侧边栏
-    </div>
-  </md-sidenav>
+    <md-sidenav #sidenav mode="side" class="app-sidenav" style="padding-top: 64px;">
+        <div>
+            主页面侧边栏
+        </div>
+    </md-sidenav>
 
-  <router-outlet name="primary"></router-outlet>
+    <!--router-outlet name="primary"></router-outlet-->
+    <!--fz-router-outlet name="primary"></fz-router-outlet-->
+    <fz-main-router-outlet name="primary"></fz-main-router-outlet>
 
 </md-sidenav-container>
 
@@ -45,17 +47,17 @@
 <md-toolbar style="position: fixed;z-index: 10;bottom: 0;height: 50px;text-align:center;clear: both;
     display: block;
     text-align: center; ">
-  <span class="floatLeft fontSize14 gray" style="margin: 0 10px">{{currentTime}}</span>
-  <span class="floatLeft fontSize14 gray">当前用户[:{{authInfoService.currentAuthUser || '空'}}]</span>
-  <span class="floatLeft fontSize14 gray" style="margin: 0 10px">
+    <span class="floatLeft fontSize14 gray" style="margin: 0 10px">{{currentTime}}</span>
+    <span class="floatLeft fontSize14 gray">当前用户[:{{authInfoService.currentAuthUser || '空'}}]</span>
+    <span class="floatLeft fontSize14 gray" style="margin: 0 10px">
         提示[
         <a *ngIf="errorService.currentError" routerLink="login">{{errorService.currentError.message || '空'}}</a>
         ]
     </span>
-  <span class="app-toolbar-filler"></span>
-  <fz-footer></fz-footer>
-  <span class="floatLeft fontSize14 gray" style="margin: 0 10px">[v1.0.0]</span>
-  <span class="app-toolbar-filler"></span>
+    <span class="app-toolbar-filler"></span>
+    <fz-footer></fz-footer>
+    <span class="floatLeft fontSize14 gray" style="margin: 0 10px">[v1.0.0]</span>
+    <span class="app-toolbar-filler"></span>
 </md-toolbar>
 <!--end of 底部状态栏-->
 

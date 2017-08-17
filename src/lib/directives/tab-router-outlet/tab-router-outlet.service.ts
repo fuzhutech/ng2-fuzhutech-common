@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TabGroupRouterOutLetDirective, TabRouterOutletDirective, ActivateInfo} from './tab-router-outlet';
+import {TabGroupRouterOutLetDirective} from './router_outlet';
+import {TabRouterOutletDirective, ActivateInfo} from './tab-router-outlet';
 import {MainLinkData} from '../../components/menuside/menuside.component';
 
 export class Data {

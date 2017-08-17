@@ -14,127 +14,6 @@ import {TabRouterOutletService} from './tab-router-outlet.service';
 import {isUndefined} from 'util';
 
 @Directive({
-    //selector: '[fz-router-outlet]'
-    selector: 'fz-router-outlet'
-})
-export class TabGroupRouterOutLetDirective extends RouterOutlet {
-
-    private service: TabRouterOutletService;
-
-    /* @override */
-    constructor(service: TabRouterOutletService, parentContexts: ChildrenOutletContexts, location: ViewContainerRef,
-                resolver: ComponentFactoryResolver, @Attribute('name') name: string,
-                changeDetector: ChangeDetectorRef) {
-
-        super(parentContexts, location, resolver, name, changeDetector);
-
-        this.service = service;
-        this.service.tabs = [];
-
-        service.mainRouterOutLet = this;
-    }
-
-    /* @override */
-    activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver | null) {
-        const showPath = this.getShowPath(activatedRoute);
-        const header = this.getHeader(activatedRoute, showPath);
-
-        //查找对应的TabRouterOutlet、标签页
-        const tabRouterOutlet = this.service.tabOutlets[showPath];
-        const activateInfo = this.service.activateInfos[showPath];
-        if (isUndefined(tabRouterOutlet) && isUndefined(activateInfo)) {
-            //若不存在对应的TabRouterOutlet，则创建Tab
-            this.service.addTab(header, null, showPath);
-            //由于新创建的Tab，此时对应的TabRouterOutlet并未创建，故将activate信息保存
-            this.service.registerActivate(showPath, {
-                activatedRoute: activatedRoute,
-                resolver: resolver
-            });
-        } else if (!isUndefined(tabRouterOutlet)) {
-            //存在TabRouterOutlet，且有组件，则销毁
-            tabRouterOutlet.deactivate();
-
-            //标签页模式：创建路由内容；借鉴RouterOutlet.activate的原有实现代码
-            tabRouterOutlet.activateWith(activatedRoute, resolver);
-        }
-
-    }
-
-    private getShowPath(activatedRoute: ActivatedRoute): string {
-        //获取showPath
-        let showPath = '';
-        const pathFromRoot = activatedRoute.pathFromRoot;
-        let s1 = '';
-        for (let i = pathFromRoot.indexOf(this.service.mainActivatedRoute); i < pathFromRoot.length; i++) {
-            s1 = activatedRoute.pathFromRoot[i].snapshot.url.join('/');
-            if (s1 != '') {
-                showPath = showPath + '/' + s1;
-            }
-        }
-
-        //获取activatedPath
-        let activatedPath = '';
-        let s2;
-        for (const entry of activatedRoute.pathFromRoot) {
-            s2 = entry.snapshot.url.join('/');
-            if (s2 != '') {
-                activatedPath = activatedPath + '/' + s2;
-            }
-        }
-
-        return showPath;
-
-    }
-
-    private getHeader(activatedRoute: ActivatedRoute, showPath: string): string {
-        //查找是否对应的MenuData
-        const subMenuLinkItemData = this.getSubMenuLinkItemData(showPath);
-
-        //获取header
-        let header: string = null;
-        if (subMenuLinkItemData != null) {
-            header = subMenuLinkItemData.title;
-        }
-
-        if (header == null) {
-            if ((!isUndefined(activatedRoute.routeConfig.data)) && (!isUndefined(activatedRoute.routeConfig.data['title']))) {
-                header = activatedRoute.routeConfig.data['title'];
-            } else {
-                header = '无定义';
-            }
-
-            console.log(header);
-        }
-
-        return header;
-    }
-
-    private getSubMenuLinkItemData(showPath: string) {
-        //let subMenuLinkItemData = null;
-        if (isUndefined(this.service.menuDataCol)) {
-            return null;
-        }
-
-        for (const entry of this.service.menuDataCol) {
-
-            for (const subMenuLinkItem of entry.subMenuLinkCol) {
-                //console.log('subMenuLinkItem.path:'+'/'+subMenuLinkItem.path+';showpath:'+showPath);
-                if ('/' + subMenuLinkItem.path == showPath) {
-                    return subMenuLinkItem;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    deactivate() {
-        //console.log('deactivate router outlet!');
-        super.deactivate();
-    };
-}
-
-@Directive({
     selector: 'fz-tab-router-outlet'
 })
 export class TabRouterOutletDirective implements AfterViewInit, OnDestroy {
@@ -151,7 +30,9 @@ export class TabRouterOutletDirective implements AfterViewInit, OnDestroy {
 
     private service: TabRouterOutletService;
 
-    @Input() mainRouterOutlet: TabGroupRouterOutLetDirective;
+    @Input() mainRouterOutlet: any;
+
+    //@Input() mainRouterOutlet: TabGroupRouterOutLetDirective;
 
     constructor(service: TabRouterOutletService, parentContexts: ChildrenOutletContexts, location: ViewContainerRef,
                 resolver: ComponentFactoryResolver) {

@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FzTabRouterOutletModule} from '../lib/directives/tab-router-outlet/tab-router-outlet.module';
 
 import {
     MdToolbarModule,
@@ -40,7 +41,8 @@ import {AppRoutingModule} from './app-routing.module';
         RouterModule, BrowserAnimationsModule,
         MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdMenuModule, MdSidenavModule,
         AppRoutingModule, FzErrorModule, FzFooterModule, FzConfirmDialogModule, FzUploadDialogModule,
-        AuthInfoModule
+        AuthInfoModule,
+        FzTabRouterOutletModule
     ],
     providers: [],
     entryComponents: [ConfirmDialogComponent],
