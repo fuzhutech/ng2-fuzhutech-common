@@ -19,21 +19,19 @@ export class MainTabPageComponent {
     }
 
     onRouterLinkClick(event: SubLinkData) {
-
-        //选择对应的标签页tab
-        if (!this.tabRouterOutletService.showTabView) return;
-
         //获取showPath
         let showPath = '';
-        if ((!isUndefined(event)) && (!isUndefined(event.path)))
+        if ((!isUndefined(event)) && (!isUndefined(event.path))) {
             showPath = event.path;
+        }
 
         //查找对应的标签页
         this.tabRouterOutletService.activeTab('/' + showPath);
     }
 
     closeTab(event: Event, tab: TabData) {
-        if (tab.closable)
+        if (tab.closable) {
             this.tabRouterOutletService.deleteTab(tab);
+        }
     }
 }

@@ -10,6 +10,9 @@
     <a md-button routerLink="tab-page">
         标签式页面
     </a>
+    <a md-button routerLink="nest-nav">
+        嵌套导航
+    </a>
     <span class="app-toolbar-filler"></span>
     <span>
     <a *ngIf="!authInfoService.currentAuthUser" md-button routerLink="login">登录</a>
@@ -39,7 +42,7 @@
 
     <!--router-outlet name="primary"></router-outlet-->
     <!--fz-router-outlet name="primary"></fz-router-outlet-->
-    <fz-main-router-outlet name="primary"></fz-main-router-outlet>
+    <fz-router-outlet name="primary"></fz-router-outlet>
 
 </md-sidenav-container>
 

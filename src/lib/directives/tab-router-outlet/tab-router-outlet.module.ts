@@ -2,16 +2,17 @@ import {NgModule} from '@angular/core';
 
 import {CommonModule} from '@angular/common';
 import {TabRouterOutletService} from './tab-router-outlet.service';
-import {TabGroupRouterOutLetDirective} from './router_outlet';
-import {TabRouterOutletDirective} from './tab-router-outlet';
+import {FzRouterOutletDirective} from './router_outlet';
 import {FzMainRouterOutLetDirective} from './main_router_outlet';
+import {FzTabRouterOutletDirective} from './tab-router-outlet';
+
 import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
     imports: [CommonModule, FormsModule],
-    exports: [TabGroupRouterOutLetDirective, TabRouterOutletDirective, FzMainRouterOutLetDirective],
-    declarations: [TabGroupRouterOutLetDirective, TabRouterOutletDirective, FzMainRouterOutLetDirective],
+    exports: [FzRouterOutletDirective, FzTabRouterOutletDirective, FzMainRouterOutLetDirective],
+    declarations: [FzRouterOutletDirective, FzTabRouterOutletDirective, FzMainRouterOutLetDirective],
     providers: [TabRouterOutletService]
 })
 export class FzTabRouterOutletModule {

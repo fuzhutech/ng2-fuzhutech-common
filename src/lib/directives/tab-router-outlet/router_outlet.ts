@@ -1,55 +1,53 @@
+/**
+ * 拷贝router-outlet源码，因为官方源码私有变量无法访问。其中以“_fz”结尾的变量用途均为放开访问权限
+ */
 import {Directive, Input, Attribute, ChangeDetectorRef} from '@angular/core';
 import {ChildrenOutletContexts, RouterOutlet} from '@angular/router';
 
 import {
     ComponentFactoryResolver,
-    EventEmitter,
     Injector,
     OnDestroy, OnInit,
     ViewContainerRef,
-    AfterViewInit,
     ComponentRef
 } from '@angular/core';
 import {ActivatedRoute, PRIMARY_OUTLET} from '@angular/router';
 import {TabRouterOutletService} from './tab-router-outlet.service';
 import {isUndefined} from 'util';
 
-import {getShowPath, getHeader} from './utils';
-
 @Directive({selector: 'fz-router-outlet'})
-export class TabGroupRouterOutLetDirective extends RouterOutlet implements OnDestroy, OnInit {
+export class FzRouterOutletDirective extends RouterOutlet implements OnDestroy, OnInit {
 
-    private activated_fz: ComponentRef<any> | null = null;
-    private _activatedRoute_fz: ActivatedRoute | null = null;
-    private name_fz: string;
+    protected activated_fz: ComponentRef<any> | null = null;
+    protected _activatedRoute_fz: ActivatedRoute | null = null;
+    protected name_fz: string;
 
     /* @override */
-    constructor(private parentContexts_fz: ChildrenOutletContexts,
-                private location_fz: ViewContainerRef,
-                private resolver_fz: ComponentFactoryResolver, @Attribute('name') name: string,
-                private changeDetector_fz: ChangeDetectorRef,
-                private service: TabRouterOutletService) {
+    /**
+     * 放宽原始私有变量访问权限
+     * @param {ChildrenOutletContexts} parentContexts_fz
+     * @param {ViewContainerRef} location_fz
+     * @param {ComponentFactoryResolver} resolver_fz
+     * @param {string} name
+     * @param {ChangeDetectorRef} changeDetector_fz
+     * @param {TabRouterOutletService} service
+     */
+    constructor(protected parentContexts_fz: ChildrenOutletContexts, protected location_fz: ViewContainerRef,
+                protected  resolver_fz: ComponentFactoryResolver, @Attribute('name') name: string,
+                protected  changeDetector_fz: ChangeDetectorRef) {
 
         super(parentContexts_fz, location_fz, resolver_fz, name, changeDetector_fz);
-        console.log('fz-router-outlet constructor....');
 
         this.name_fz = name || PRIMARY_OUTLET;
-
-        //this.service = service;
-        this.service.tabs = [];
-
-        service.mainRouterOutLet = this;
     }
 
     /* @override */
     ngOnDestroy(): void {
-        console.log('fz-router-outlet ngOnDestroy....');
         this.parentContexts_fz.onChildOutletDestroyed(this.name_fz);
     }
 
     /* @override */
     ngOnInit(): void {
-        console.log('fz-router-outlet ngOnInit....');
         if (!this.activated_fz) {
             // If the outlet was not instantiated at the time the route got activated we need to populate
             // the outlet when it is initialized (ie inside a NgIf)
@@ -116,7 +114,6 @@ export class TabGroupRouterOutLetDirective extends RouterOutlet implements OnDes
 
     /* @override */
     deactivate() {
-        console.log('fz-router-outlet deactivate....');
         if (this.activated_fz) {
             const c = this.component;
             this.activated_fz.destroy();
@@ -127,36 +124,12 @@ export class TabGroupRouterOutLetDirective extends RouterOutlet implements OnDes
     };
 
     /* @override */
-
-    /*activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver | null) {
-        const showPath = getShowPath(activatedRoute);
-        const header = getHeader(activatedRoute, showPath);
-
-        //查找对应的TabRouterOutlet、标签页
-        const tabRouterOutlet = this.service.tabOutlets[showPath];
-        const activateInfo = this.service.activateInfos[showPath];
-        if (isUndefined(tabRouterOutlet) && isUndefined(activateInfo)) {
-            //若不存在对应的TabRouterOutlet，则创建Tab
-            this.service.addTab(header, null, showPath);
-            //由于新创建的Tab，此时对应的TabRouterOutlet并未创建，故将activate信息保存
-            this.service.registerActivate(showPath, {
-                activatedRoute: activatedRoute,
-                resolver: resolver
-            });
-        } else if (!isUndefined(tabRouterOutlet)) {
-            //存在TabRouterOutlet，且有组件，则销毁
-            tabRouterOutlet.deactivate();
-
-            //标签页模式：创建路由内容；借鉴RouterOutlet.activate的原有实现代码
-            tabRouterOutlet.activateWith(activatedRoute, resolver);
-        }
-
-    }*/
-
-    /* @override */
+    /**
+     * 因activatedRoute、snapshot属性访问限制，更换为公开方法
+     * @param {ActivatedRoute} activatedRoute
+     * @param {ComponentFactoryResolver} resolver
+     */
     activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver | null) {
-        console.log('fz-router-outlet activateWith....');
-
         if (this.isActivated) {
             throw new Error('Cannot activate an already activated outlet');
         }
@@ -181,7 +154,10 @@ export class TabGroupRouterOutLetDirective extends RouterOutlet implements OnDes
 
 }
 
-class OutletInjector implements Injector {
+/**
+ * @angular/router 原始代码未导出，拷贝实现
+ */
+export class OutletInjector implements Injector {
     constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts,
                 private parent: Injector) {
     }

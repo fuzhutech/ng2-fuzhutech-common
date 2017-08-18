@@ -6,7 +6,7 @@
     </md-sidenav>
     <!--end of 侧边栏-->
 
-    <fz-router-outlet #fzrouter name="primary"></fz-router-outlet>
+    <fz-main-router-outlet #fzrouter name="primary"></fz-main-router-outlet>
 
     <md-tab-group #tabView class="demo-tab-group" dynamicHeight
                   [(selectedIndex)]="tabRouterOutletService.activeTabIndex">
@@ -19,7 +19,7 @@
 
             </ng-template>
             <div class="tab-content">
-                <fz-tab-router-outlet [name]="tab.path" [mainRouterOutlet]="fzrouter"></fz-tab-router-outlet>
+                <fz-tab-router-outlet name="{{tab.path}}" [mainRouterOutlet]="fzrouter"></fz-tab-router-outlet>
             </div>
         </md-tab>
     </md-tab-group>
