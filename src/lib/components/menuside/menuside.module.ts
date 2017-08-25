@@ -6,6 +6,9 @@ import {SplitButtonModule} from 'primeng/primeng';
 import {BreadcrumbModule} from 'primeng/primeng';
 import {TabViewModule} from 'primeng/primeng';
 
+import {FzMenuItemComponent} from './menu-side-item.component';
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -15,10 +18,10 @@ import {TabViewModule} from 'primeng/primeng';
         BreadcrumbModule
     ],
     declarations: [
-        MenuSideComponent
+        MenuSideComponent, FzMenuItemComponent
     ],
     exports: [
-        MenuSideComponent
+        MenuSideComponent, FzMenuItemComponent
     ]
 
 })
