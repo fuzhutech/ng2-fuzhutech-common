@@ -12,7 +12,7 @@ import {
     Component,
     Input,
     ElementRef,
-    Host, HostBinding, QueryList, ContentChildren, ViewChild, ViewChildren
+    Host, HostBinding, QueryList, ContentChildren, ViewChild, ViewChildren, EventEmitter, Output
 } from '@angular/core';
 import {
     trigger,
@@ -31,9 +31,9 @@ export const PADDING_BASE = 24;
             <span class="menu-side-item-title" 
                   [class.menu-side-item-title-active]="_active"
                   (click)="clickHeader($event)">
-                  <span *ngIf="item.path" class="menu-side-item-title-text" [style.padding-left.px]="paddingLeft">
-                      <!--a-- routerLink="path">{{item.title}}</a-->
-                      {{item.title}}
+                  <span *ngIf="item.path" class="menu-side-item-title-text">
+                      <a [routerLink]="item.path" [style.padding-left.px]="paddingLeft" 
+                      (click)="routerLinkClick($event,item)">{{item.title}}</a>
                   </span>
                   <span *ngIf="!item.path" class="menu-side-item-title-text" [style.padding-left.px]="paddingLeft">
                        {{item.title}}
@@ -73,16 +73,12 @@ export class FzMenuItemComponent {
     level = 0;
 
     @Input()
-    disable = false;
-
-    @Input()
     item: MenuSideItem;
 
     @Input()
     parent: any;
 
     @ViewChildren(FzMenuItemComponent) menuItems;
-
 
     get paddingLeft() {
         return (this.level + 1) * PADDING_BASE;
@@ -95,6 +91,24 @@ export class FzMenuItemComponent {
         if (this._active && this.parent.menuItems) {
             this.parent.menuItems.filter(x => x !== this).forEach(menu => menu._active = false);
         }
+
+        if (this._active && this.item.children) {
+            this.parent.setWidth(this.parent.width = 120 + (this.level + 1) * 30);
+        } else {
+            this.parent.setWidth(120 + this.level * 30);
+        }
+    }
+
+    setWidth(value) {
+        this.parent.setWidth(value);
+    }
+
+    routerLinkClick(event: Event, item: MenuSideItem) {
+        this.parent.subRouterLinkClick(event, item);
+    }
+
+    subRouterLinkClick(event: Event, item: MenuSideItem) {
+        this.parent.subRouterLinkClick(event, item);
     }
 
 }

@@ -1,27 +1,3 @@
-<div id="MENUSIDE1" [ngClass]="{'active':mobileMenuActive}" style="border-right: 1px solid #e9e9e9;">
-    <div id="MENUSIDEinndent1">
-        <span id="LOGO2">
-
-        </span>
-
-        <button (click)="test()">ceshi</button>
-
-        <ng-template ngFor let-mainLink [ngForOf]="menuDataCol">
-            <span [id]="mainLink.id" class="MenuSideMainLink1"
-                  [class.MenuSideMainLinkDark]="mainLink.id == activeMenuId" (click)="activeMenuId = mainLink.id">
-            <span class="MainLinkText1">{{mainLink.text}}</span></span>
-            <div class="SubMenuLinkContainer1"
-                 [ngClass]="{'submenushow': (mainLink.id == activeMenuId), 'submenuhide': (mainLink.id != activeMenuId)}">
-                <div style="background-color: #673ab7;height: 2px;transition: .5s cubic-bezier(.35,0,.25,1);"></div>
-                <a *ngFor="let subLink of mainLink.subMenuLinkCol" class="SubMenuLink1" [routerLink]="[subLink.path]"
-                   (click)="routerLinkClick1($event,subLink)">
-                    &#9679; {{subLink.title}}</a>
-            </div>
-        </ng-template>
-
-    </div>
-
+<div id="MENUSIDE1" style="border-right: 1px solid #e9e9e9;" [style.width.px]="_width">
     <fz-menu-item *ngFor="let menuItem of menuData; let index=index" [item]="menuItem" [parent]="this"></fz-menu-item>
-
-
 </div>
