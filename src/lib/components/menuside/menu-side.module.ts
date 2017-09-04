@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MenuSideComponent} from './menuside.component';
+import {MenuSideComponent} from './menu-side.component';
 import {ButtonModule} from 'primeng/primeng';
 import {SplitButtonModule} from 'primeng/primeng';
 import {BreadcrumbModule} from 'primeng/primeng';
 import {TabViewModule} from 'primeng/primeng';
+
+import {MdIconModule} from '@angular/material';
 
 import {FzMenuItemComponent} from './menu-side-item.component';
 
@@ -15,7 +17,8 @@ import {FzMenuItemComponent} from './menu-side-item.component';
         ButtonModule,
         SplitButtonModule,
         TabViewModule,
-        BreadcrumbModule
+        BreadcrumbModule,
+        MdIconModule
     ],
     declarations: [
         MenuSideComponent, FzMenuItemComponent
@@ -28,4 +31,5 @@ import {FzMenuItemComponent} from './menu-side-item.component';
 export class FzMenuSideModule {
 }
 
-export * from './menuside.component';
+export * from './menu-side.component';
+export * from './menu-side-item.component';

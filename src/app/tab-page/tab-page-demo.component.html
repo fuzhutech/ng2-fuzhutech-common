@@ -1,8 +1,8 @@
 <md-sidenav-container style="min-height: 100%;height: 100%">
     <!--begin of 侧边栏-->
     <md-sidenav #sidenav mode="side" class="app-sidenav" opened="true" style="min-height: 100%;">
-        <fz-menuside [menuDataCol]="tabRouterOutletService.menuDataCol"
-                     (onRouterLinkClick)="onRouterLinkClick($event)"></fz-menuside>
+        <fz-menu-side [menuData]="tabRouterOutletService.menuData"
+                     (onRouterLinkClick)="onRouterLinkClick($event)"></fz-menu-side>
     </md-sidenav>
     <!--end of 侧边栏-->
 

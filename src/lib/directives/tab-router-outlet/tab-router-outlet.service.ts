@@ -2,8 +2,8 @@ import {Injectable, ComponentFactoryResolver, ComponentRef} from '@angular/core'
 import {ActivatedRoute, RouterOutlet, ChildrenOutletContexts} from '@angular/router';
 import {FzRouterOutletDirective} from './router_outlet';
 import {FzTabRouterOutletDirective, ActivateInfo} from './tab-router-outlet';
-import {MainLinkData} from '../../components/menuside/menuside.component';
 import {isUndefined} from 'util';
+import {MenuSideItem} from '../../components/menuside/menu-side-item.component';
 
 export class TabOutletContext {
     showPath: string;
@@ -41,7 +41,7 @@ export class TabRouterOutletService {
 
     public activeTabIndex = 0;
     public addTabPosition = 0;
-    public menuDataCol: MainLinkData[];
+    public menuData: MenuSideItem[];
     public tabs: TabData[] = [];
 
     constructor() {
@@ -154,17 +154,16 @@ export class TabRouterOutletService {
     }
 
     private getSubMenuLinkItemData(showPath: string) {
-        //let subMenuLinkItemData = null;
-        if (isUndefined(this.menuDataCol)) {
+        if (isUndefined(this.menuData)) {
             return null;
         }
 
-        for (const entry of this.menuDataCol) {
-
-            for (const subMenuLinkItem of entry.subMenuLinkCol) {
-                //console.log('subMenuLinkItem.path:'+'/'+subMenuLinkItem.path+';showpath:'+showPath);
-                if ('/' + subMenuLinkItem.path == showPath) {
-                    return subMenuLinkItem;
+        for (const entry of this.menuData) {
+            if (entry.children) {
+                for (const subMenuLinkItem of entry.children) {
+                    if ('/' + subMenuLinkItem.path == showPath) {
+                        return subMenuLinkItem;
+                    }
                 }
             }
         }

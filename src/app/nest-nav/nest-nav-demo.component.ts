@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {SubPageComponentWithComponentDialog, TabRouterOutletService} from '../ng2-fuzhutech-common';
 import {ActivatedRoute} from '@angular/router';
-import {MainLinkData} from '../../lib/components/menuside/menuside.component';
+import {MenuSideItem} from '../ng2-fuzhutech-common';
 
 
 @Component({
@@ -12,12 +12,11 @@ import {MainLinkData} from '../../lib/components/menuside/menuside.component';
 export class NestNavDemoComponent implements OnInit, OnDestroy {
 
 
-    configMenuData: MainLinkData[] = [
+    configMenuData: MenuSideItem[] = [
         {
-            id: 'menu_basic_config',
-            img: 'showcase/resources/images/mono/menu.svg',
-            text: '页面布局',
-            subMenuLinkCol: [
+            //id: 'menu_basic_config',
+            title: '页面布局',
+            children: [
                 {
                     path: 'sunny-tab',
                     title: 'sunny-tab示例'
@@ -33,10 +32,10 @@ export class NestNavDemoComponent implements OnInit, OnDestroy {
             ]
         },
         {
-            id: 'menu_system management',
-            img: 'showcase/resources/images/mono/menu.svg',
-            text: '其他示例',
-            subMenuLinkCol: [
+            //id: 'menu_system management',
+            //img: 'showcase/resources/images/mono/menu.svg',
+            title: '其他示例',
+            children: [
                 {
                     path: 'demo1',
                     title: '示例1'
@@ -62,7 +61,7 @@ export class NestNavDemoComponent implements OnInit, OnDestroy {
     constructor(private tabRouterOutletService: TabRouterOutletService, activatedRoute: ActivatedRoute) {
         //this.tabRouterOutletService = service;
         this.tabRouterOutletService.mainActivatedRoute = activatedRoute;
-        this.tabRouterOutletService.menuDataCol = this.configMenuData;
+        this.tabRouterOutletService.menuData = this.configMenuData;
     }
 
     ngOnInit(): void {

@@ -2,7 +2,8 @@ import {Component, ComponentFactoryResolver, ViewChild, AfterViewInit, ViewConta
 import {ActivatedRoute} from '@angular/router';
 import {isUndefined} from 'util';
 
-import {TabRouterOutletService, TabData, MainLinkData, SubLinkData} from '../../index';
+import {TabRouterOutletService, TabData} from '../../index';
+import {MenuSideItem} from '../menuside/menu-side-item.component';
 
 
 export class MainTabPageComponent {
@@ -12,13 +13,13 @@ export class MainTabPageComponent {
     tabRouterOutletService: TabRouterOutletService;
     private activatedRoute: ActivatedRoute;
 
-    constructor(service: TabRouterOutletService, activatedRoute: ActivatedRoute, configMenuData: MainLinkData[]) {
+    constructor(service: TabRouterOutletService, activatedRoute: ActivatedRoute, configMenuData: MenuSideItem[]) {
         this.tabRouterOutletService = service;
         this.tabRouterOutletService.mainActivatedRoute = activatedRoute;
-        this.tabRouterOutletService.menuDataCol = configMenuData;
+        this.tabRouterOutletService.menuData = configMenuData;
     }
 
-    onRouterLinkClick(event: SubLinkData) {
+    onRouterLinkClick(event: MenuSideItem) {
         //获取showPath
         let showPath = '';
         if ((!isUndefined(event)) && (!isUndefined(event.path))) {

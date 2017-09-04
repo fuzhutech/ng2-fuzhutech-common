@@ -23,32 +23,38 @@ import {
 } from '@angular/animations';
 
 export const PADDING_BASE = 24;
+export const WIDTH_BASE = 140;
 
 @Component({
     selector: 'fz-menu-item',
     template: `
         <ng-template [ngIf]="item">
             <span class="menu-side-item-title" 
-                  [class.menu-side-item-title-active]="_active"
+                  [class.menu-side-item-title-active]="_active && !item.children"
                   (click)="clickHeader($event)">
                   <span *ngIf="item.path" class="menu-side-item-title-text">
-                      <a [routerLink]="item.path" [style.padding-left.px]="paddingLeft" 
-                      (click)="routerLinkClick($event,item)">{{item.title}}</a>
+                      <a [routerLink]="item.path" [style.padding-left.px]="paddingLeft" (click)="routerLinkClick($event,item)">
+                         {{item.title}}
+                         <md-icon class="menu-side-item-title-icon" *ngIf="!_active && item.children">expand_more</md-icon>
+                         <md-icon class="menu-side-item-title-icon" *ngIf="_active && item.children">expand_less</md-icon>
+                      </a>
                   </span>
                   <span *ngIf="!item.path" class="menu-side-item-title-text" [style.padding-left.px]="paddingLeft">
                        {{item.title}}
+                       <md-icon class="menu-side-item-title-icon" *ngIf="!_active && item.children">expand_more</md-icon>
+                       <md-icon class="menu-side-item-title-icon" *ngIf="_active && item.children">expand_less</md-icon>
                   </span>
             </span>
             
             <div class="ant-collapse-content" [@collapseState]="_active?'active':'inactive'">
-                <div style="width:100%;background-color: #673ab7;height: 2px;transition: .5s cubic-bezier(.35,0,.25,1);"></div>
+                <!--div style="width:100%;background-color: #673ab7;height: 2px;transition: .5s cubic-bezier(.35,0,.25,1);"></div-->
                 <div class="ant-collapse-content-box">
                     <fz-menu-item *ngFor="let subItem of item.children" [item]="subItem" [level]="level+1" [parent]="this"></fz-menu-item>
                     <ng-content></ng-content>
                 </div>
             </div>
         </ng-template>`,
-    styleUrls: ['./menuside.component.css'],
+    styleUrls: ['./menu-side.component.css'],
     animations: [
         trigger('collapseState', [
             state('inactive', style({
@@ -92,11 +98,25 @@ export class FzMenuItemComponent {
             this.parent.menuItems.filter(x => x !== this).forEach(menu => menu._active = false);
         }
 
-        if (this._active && this.item.children) {
-            this.parent.setWidth(this.parent.width = 120 + (this.level + 1) * 30);
-        } else {
-            this.parent.setWidth(120 + this.level * 30);
+        const level = this.expandDown(this, this.level);
+
+        this.parent.setWidth(WIDTH_BASE + level * 30)
+    }
+
+    expandDown(menuItem: any, level: number): number {
+        let i = level;
+
+        if ((menuItem.level - level) > 0) {
+            i = menuItem.level;
         }
+
+        if (menuItem._active && menuItem.menuItems) {
+            for (const entry of menuItem.menuItems.toArray()) {
+                i = this.expandDown(entry, i);
+            }
+        }
+
+        return i;
     }
 
     setWidth(value) {

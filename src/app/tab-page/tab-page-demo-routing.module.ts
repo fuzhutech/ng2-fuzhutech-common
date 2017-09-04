@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {TabPageDemoComponent} from './tab-page-demo.component';
-import {MainLinkData} from '../ng2-fuzhutech-common';
+import {MenuSideItem} from '../ng2-fuzhutech-common';
 
 @NgModule({
     imports: [
@@ -29,12 +29,14 @@ import {MainLinkData} from '../ng2-fuzhutech-common';
 export class FzTabPageDemoRoutingModule {
 }
 
-export const ConfigMenuData: MainLinkData[] = [
+export const ConfigMenuData: MenuSideItem[] = [
     {
-        id: 'menu_basic_config',
-        img: 'showcase/resources/images/mono/menu.svg',
-        text: '页面布局',
-        subMenuLinkCol: [
+        path: '/test',
+        title: '测试菜单'
+    },
+    {
+        title: '页面布局',
+        children: [
             {
                 path: 'sub-page',
                 title: '子页面示例'
@@ -46,25 +48,13 @@ export const ConfigMenuData: MainLinkData[] = [
             {
                 path: 'sub-page2',
                 title: '子页面示例2'
-            }
-        ]
-    },
-    {
-        id: 'menu_system management',
-        img: 'showcase/resources/images/mono/menu.svg',
-        text: '其他示例',
-        subMenuLinkCol: [
-            {
-                path: 'demo1',
-                title: '示例1'
             },
             {
-                path: 'demo2',
-                title: '示例2'
-            },
-            {
-                path: 'demo3',
-                title: '示例3'
+                title: '其他示例',
+                children: [
+                    {path: 'demo1', title: '示例1'},
+                    {path: 'demo2', title: '示例2'}
+                ]
             }
         ]
     }

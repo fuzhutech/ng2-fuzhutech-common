@@ -1,1 +1,1 @@
-export * from './menuside.module';
+export * from './menu-side.module';
