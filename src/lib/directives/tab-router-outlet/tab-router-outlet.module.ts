@@ -13,9 +13,10 @@ import {FormsModule} from '@angular/forms';
     imports: [CommonModule, FormsModule],
     exports: [FzRouterOutletDirective, FzTabRouterOutletDirective, FzMainRouterOutLetDirective],
     declarations: [FzRouterOutletDirective, FzTabRouterOutletDirective, FzMainRouterOutLetDirective],
-    providers: [TabRouterOutletService]
+    //providers: [TabRouterOutletService]
 })
 export class FzTabRouterOutletModule {
+
 }
 
 export * from './tab-router-outlet.service';

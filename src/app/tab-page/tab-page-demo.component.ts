@@ -9,7 +9,8 @@ import {ConfigMenuData} from './tab-page-demo-routing.module';
 @Component({
     moduleId: module.id,
     templateUrl: './tab-page-demo.component.html',
-    styleUrls: ['./tab-page-demo.component.css']
+    styleUrls: ['./tab-page-demo.component.css'],
+    providers: [TabRouterOutletService]
 })
 export class TabPageDemoComponent extends MainTabPageComponent implements OnInit, OnDestroy {
 

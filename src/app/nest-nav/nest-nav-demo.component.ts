@@ -7,7 +7,8 @@ import {MenuSideItem} from '../ng2-fuzhutech-common';
 
 @Component({
     templateUrl: './nest-nav-demo.component.html',
-    styleUrls: ['./nest-nav-demo.component.css']
+    styleUrls: ['./nest-nav-demo.component.css'],
+    providers: [TabRouterOutletService]
 })
 export class NestNavDemoComponent implements OnInit, OnDestroy {
 

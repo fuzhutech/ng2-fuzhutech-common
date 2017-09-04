@@ -5,7 +5,12 @@ import {isUndefined} from 'util';
 import {TabRouterOutletService, TabData} from '../../index';
 import {MenuSideItem} from '../menuside/menu-side-item.component';
 
-
+@Component({
+    moduleId: module.id,
+    //templateUrl: './tab-page-demo.component.html',
+    //styleUrls: ['./tab-page-demo.component.css'],
+    providers: [TabRouterOutletService]
+})
 export class MainTabPageComponent {
 
     isDarkTheme = false;
