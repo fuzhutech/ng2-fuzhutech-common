@@ -57,6 +57,9 @@ export class FzTabRouterOutletDirective
         const context = this.service.getContext(this.name);
         if (!context.isActivated) {
             context.isActivated = true;
+
+            context.header = this.service.getHeader(context.route, context.showPath);
+            context.tab.label = context.header;
             this.activateWith(context.route, context.resolver);
         }
     }

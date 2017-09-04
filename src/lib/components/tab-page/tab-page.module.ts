@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {MdDialogModule, MdSidenavModule, MdTabsModule} from '@angular/material';
 import {ContextMenuModule} from 'primeng/primeng';
 import {TabPageComponent} from './tab-page.component';
-import {FzMenuSideModule} from '../menuside/menu-side.module';
+import {FzMenuSideModule} from '../menu-side/menu-side.module';
 import {FzTabRouterOutletModule} from '../../directives/tab-router-outlet/tab-router-outlet.module';
 
 @NgModule({

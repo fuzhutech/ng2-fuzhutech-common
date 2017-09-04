@@ -3,7 +3,7 @@ import {ActivatedRoute, RouterOutlet, ChildrenOutletContexts} from '@angular/rou
 import {FzRouterOutletDirective} from './router_outlet';
 import {FzTabRouterOutletDirective, ActivateInfo} from './tab-router-outlet';
 import {isUndefined} from 'util';
-import {MenuSideItem} from '../../components/menuside/menu-side-item.component';
+import {MenuSideItem} from '../../components/menu-side/menu-side-item.component';
 
 export class TabOutletContext {
     showPath: string;
@@ -130,7 +130,7 @@ export class TabRouterOutletService {
 
     }
 
-    private getHeader(activatedRoute: ActivatedRoute, showPath: string): string {
+    getHeader(activatedRoute: ActivatedRoute, showPath: string): string {
         //查找是否对应的MenuData
         const subMenuLinkItemData = this.getSubMenuLinkItemData(showPath);
 
