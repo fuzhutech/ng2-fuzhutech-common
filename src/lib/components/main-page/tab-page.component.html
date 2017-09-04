@@ -1,4 +1,5 @@
-<!--md-sidenav-container style="min-height: 100%;height: 100%">
+<md-sidenav-container style="min-height: 100%;height: 100%">
+
     <md-sidenav #sidenav mode="side" class="app-sidenav" opened="true" style="min-height: 100%;">
         <fz-menu-side [menuData]="tabRouterOutletService.menuData"
                      (onRouterLinkClick)="onRouterLinkClick($event)"></fz-menu-side>
@@ -24,5 +25,4 @@
 
     <p-contextMenu #cm [model]="items"></p-contextMenu>
 
-</md-sidenav-container-->
-<fz-tab-page [configMenuData]="menuData"></fz-tab-page>
+</md-sidenav-container>

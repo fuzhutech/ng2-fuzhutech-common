@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {ContextMenu} from 'primeng/primeng';
-import {TabRouterOutletService, MainTabPageComponent, TabData} from '../ng2-fuzhutech-common';
+import {TabRouterOutletService, TabData} from '../ng2-fuzhutech-common';
 import {AuthInfoService, MenuInfo} from '../ng2-fuzhutech-common';
 import {ConfigMenuData} from './tab-page-demo-routing.module';
 
@@ -10,9 +10,10 @@ import {ConfigMenuData} from './tab-page-demo-routing.module';
     moduleId: module.id,
     templateUrl: './tab-page-demo.component.html',
     styleUrls: ['./tab-page-demo.component.css'],
-    providers: [TabRouterOutletService]
+    //providers: [TabRouterOutletService]
 })
-export class TabPageDemoComponent extends MainTabPageComponent implements OnInit, OnDestroy {
+export class TabPageDemoComponent implements OnInit, OnDestroy {
+//export class TabPageDemoComponent extends MainTabPageComponent implements OnInit, OnDestroy {
 
     items = [
         {label: '关闭标签页', icon: 'fa-search', command: (event) => this.Close(event)},
@@ -22,9 +23,14 @@ export class TabPageDemoComponent extends MainTabPageComponent implements OnInit
     private subscription: Subscription;
     private menuInfo: MenuInfo;
     private systemId = 110;
+    menuData: any;
 
-    constructor(private service: TabRouterOutletService, activatedRoute: ActivatedRoute, private authInfoService: AuthInfoService) {
+    /*constructor(private service: TabRouterOutletService, activatedRoute: ActivatedRoute, private authInfoService: AuthInfoService) {
         super(service, activatedRoute, ConfigMenuData);
+    }*/
+
+    constructor() {
+        this.menuData =  ConfigMenuData;
     }
 
     onNodeRightClick(event: MouseEvent, tab: TabData, contextMenu: ContextMenu) {
