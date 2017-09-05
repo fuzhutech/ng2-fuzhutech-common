@@ -6,6 +6,7 @@ import {FzMenuSideModule} from './components/menu-side/index';
 import {FzTabRouterOutletModule} from './directives/tab-router-outlet/index';
 import {FzToolbarModule} from './components/toolbar/index';
 import {FzTabPageModule} from './components/tab-page/tab-page.module';
+import {FzSubPageModule} from './components/sub-page/sub-page.module';
 
 const SHARED_MODULES = [
     FzConfirmDialogModule,
@@ -13,7 +14,8 @@ const SHARED_MODULES = [
     FzMenuSideModule,
     FzTabRouterOutletModule,
     FzToolbarModule,
-    FzTabPageModule
+    FzTabPageModule,
+    FzSubPageModule
 ];
 
 @NgModule({

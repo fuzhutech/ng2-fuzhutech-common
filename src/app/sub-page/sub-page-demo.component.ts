@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {SubPageComponentWithComponentDialog} from '../ng2-fuzhutech-common';
 
@@ -12,6 +12,9 @@ import {DialogDemoComponent} from './dialog/dialog-demo.component';
 })
 export class SubPageDemoComponent
     extends SubPageComponentWithComponentDialog<SomeDemoModel, SomeDemoService, DialogDemoComponent> implements OnInit, OnDestroy {
+
+    @ViewChild('subPage') subPage: ElementRef;
+    @ViewChild('dataTable') dataTable: ElementRef;
 
     constructor(service: SomeDemoService, dialog: MdDialog) {
         super(service, '子页面示例', dialog, DialogDemoComponent);

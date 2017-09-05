@@ -7,7 +7,7 @@ import {DataTableModule, PickListModule} from 'primeng/primeng';
 
 import {MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdSelectModule} from '@angular/material';
 
-import {FzToolbarModule} from '../ng2-fuzhutech-common';
+import {FzToolbarModule, FzSubPageModule} from '../ng2-fuzhutech-common';
 
 import {FzSubPageDemoRoutingModule} from './sub-page-demo-routing.module';
 import {SomeDemoService} from './service/some-demo.service';
@@ -23,7 +23,7 @@ import {SomeDemoDataService, SomeDemoDataOverrideService} from './service/some-d
         //InMemoryWebApiModule.forRoot(SomeDemoDataService),
         DataTableModule, PickListModule,
         MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdSelectModule,
-        FzToolbarModule,
+        FzToolbarModule, FzSubPageModule,
         FzSubPageDemoRoutingModule
     ],
     exports: [

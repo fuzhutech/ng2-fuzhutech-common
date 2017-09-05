@@ -1,35 +1,25 @@
-<fz-toolbar [disabledView]="!selectedRecord" (onViewClick)="handleView()" (onAddClick)="handleAdd()"
-            [disabledEdit]="!selectedRecord" (onEditClick)="handleEdit()"
-            [disabledDelete]="!selectedRecord" (onDeleteClick)="handleDelete()"
-            (onRefreshClick)="handleRefresh()" (onImportClick)="handleImport()" (onExportClick)="handleExport()"
-            [menuId]="currentMenuId" [authInfo]="currentAuthInfo" [menuInfo]="currentMenuInfo">
+<fz-sub-page [subPageComponent]="this" #subPage>
+    <div name="toolbar">
+        <button md-button>
+            <md-icon>view_module</md-icon>
+            其他
+        </button>
+    </div>
 
-    <button md-button>
-        <md-icon>view_module</md-icon>
-        其他
-    </button>
-
-</fz-toolbar>
-<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
-    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
-</div>
-<div style="color: red">
-    {{service.message$ | async}}
-</div>
-<!--records$ | async-->
-<p-dataTable #dt [globalFilter]="gb" [value]="records" selectionMode="single" [(selection)]="selectedRecord"
-             [paginator]="true" [rows]="15" resizableColumns="true">
-    <p-column field="id" header="ID" [style]="{'width':'100px'}"></p-column>
-    <p-column field="name" header="Name" [style]="{'width':'200px'}"></p-column>
-    <p-column field="createTime" header="创建时间" [style]="{'width':'200px','text-align':'center'}">
-        <ng-template let-col let-data="rowData" pTemplate="body">
-            {{ data[col.field] | date : 'yyyy-MM-dd HH:mm:ss'}}
-        </ng-template>
-    </p-column>
-    <p-column field="lastModifyTime" header="更新时间" [style]="{'width':'200px','text-align':'center'}">
-        <ng-template let-col let-data="rowData" pTemplate="body">
-            {{ data[col.field] | date : 'yyyy-MM-dd HH:mm:ss'}}
-        </ng-template>
-    </p-column>
-</p-dataTable>
+    <p-dataTable #dataTable [globalFilter]="subPage.globalFilter.nativeElement" [value]="records" selectionMode="single"
+                 [(selection)]="selectedRecord"
+                 [paginator]="true" [rows]="15" resizableColumns="true">
+        <p-column field="id" header="ID" [style]="{'width':'100px'}"></p-column>
+        <p-column field="name" header="Name" [style]="{'width':'200px'}"></p-column>
+        <p-column field="createTime" header="创建时间" [style]="{'width':'200px','text-align':'center'}">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{ data[col.field] | date : 'yyyy-MM-dd HH:mm:ss'}}
+            </ng-template>
+        </p-column>
+        <p-column field="lastModifyTime" header="更新时间" [style]="{'width':'200px','text-align':'center'}">
+            <ng-template let-col let-data="rowData" pTemplate="body">
+                {{ data[col.field] | date : 'yyyy-MM-dd HH:mm:ss'}}
+            </ng-template>
+        </p-column>
+    </p-dataTable>
+</fz-sub-page>

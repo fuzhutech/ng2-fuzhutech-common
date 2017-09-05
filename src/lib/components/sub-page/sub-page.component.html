@@ -1,0 +1,20 @@
+<fz-toolbar [disabledView]="!subPageComponent.selectedRecord" (onViewClick)="handleView()" (onAddClick)="handleAdd()"
+            [disabledEdit]="!subPageComponent.selectedRecord" (onEditClick)="handleEdit()"
+            [disabledDelete]="!subPageComponent.selectedRecord" (onDeleteClick)="handleDelete()"
+            (onRefreshClick)="handleRefresh()" (onImportClick)="handleImport()" (onExportClick)="handleExport()"
+            [menuId]="currentMenuId" [authInfo]="currentAuthInfo" [menuInfo]="currentMenuInfo">
+
+    <ng-content select="[name=toolbar]"></ng-content>
+
+</fz-toolbar>
+
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #globalFilter type="text" pInputText size="50" placeholder="Global Filter">
+</div>
+
+<div *ngIf="service" style="color: red">
+    {{service.message$ | async}}
+</div>
+
+<ng-content select="p-dataTable"></ng-content>
