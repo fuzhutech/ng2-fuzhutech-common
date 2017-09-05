@@ -9,3 +9,4 @@
  */
 
 export * from './component-dialog.component';
+export * from './dialog.module';

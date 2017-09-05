@@ -1,29 +1,23 @@
-<span md-dialog-title>{{dialogHeader}}</span>
+<fz-dialog [dialogHeader]="dialogHeader" [hostComponent]="this">
+    <md-dialog-content *ngIf="record">
+        <p>
+            <md-input-container>
+                <input mdInput [(ngModel)]="record.id" placeholder="ID">
+            </md-input-container>
+            <md-input-container>
+                <input mdInput [(ngModel)]="record.name" placeholder="Name">
+            </md-input-container>
+        </p>
+        <p>
+            <md-input-container>
+                <input mdInput value="{{ record.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}" placeholder="创建时间"
+                       disabled>
+            </md-input-container>
+            <md-input-container>
+                <input mdInput value="{{ record.lastModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}" placeholder="更新时间"
+                       disabled>
+            </md-input-container>
+        </p>
 
-<md-dialog-content *ngIf="record">
-    <p>
-        <md-input-container>
-            <input mdInput [(ngModel)]="record.id" placeholder="ID">
-        </md-input-container>
-        <md-input-container>
-            <input mdInput [(ngModel)]="record.name" placeholder="Name">
-        </md-input-container>
-    </p>
-    <p>
-        <md-input-container>
-            <input mdInput value="{{ record.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}" placeholder="创建时间" disabled>
-        </md-input-container>
-        <md-input-container>
-            <input mdInput value="{{ record.lastModifyTime | date : 'yyyy-MM-dd HH:mm:ss'}}" placeholder="更新时间" disabled>
-        </md-input-container>
-    </p>
-
-</md-dialog-content>
-
-<md-dialog-actions *ngIf="progress" [attr.align]="actionsAlignment">
-    <md-progress-bar mode="indeterminate" color="primary" style="width: 100%"></md-progress-bar>
-</md-dialog-actions>
-<md-dialog-actions [attr.align]="actionsAlignment">
-    <button md-button color="secondary" (click)="handleConfirm()">确认</button>
-    <button md-button color="secondary" (click)="handleCancel()">取消</button>
-</md-dialog-actions>
+    </md-dialog-content>
+</fz-dialog>

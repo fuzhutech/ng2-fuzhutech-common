@@ -10,9 +10,6 @@ import {SomeDemoModel} from '../model/some-demo.model';
 })
 export class DialogDemoComponent extends ComponentDialog<DialogDemoComponent, SomeDemoModel, SomeDemoService> {
 
-    color = 'primary';
-
-
     constructor(dialogRef: MdDialogRef<DialogDemoComponent>) {
         super(dialogRef);
     }

@@ -18,7 +18,6 @@ import {ActionType} from '../../core/model/sub-page';
 
 
 export class ComponentDialog<D, R, S extends BaseService> implements BaseDialog {
-    actionsAlignment = 'end';
     progress = false;
     dialogHeader: string;  //编辑页面标题
 
