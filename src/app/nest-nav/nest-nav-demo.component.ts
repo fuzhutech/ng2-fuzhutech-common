@@ -1,122 +1,75 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {MdDialog} from '@angular/material';
-import {SubPageComponentWithComponentDialog, TabRouterOutletService} from '../ng2-fuzhutech-common';
-import {ActivatedRoute} from '@angular/router';
-import {MenuSideItem} from '../ng2-fuzhutech-common';
-
+import {ConfigMenuData} from './nest-nav-demo-routing.module';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './nest-nav-demo.component.html',
     styleUrls: ['./nest-nav-demo.component.css'],
-    providers: [TabRouterOutletService]
+    //providers: [TabRouterOutletService]
 })
 export class NestNavDemoComponent implements OnInit, OnDestroy {
 
+    menuData = ConfigMenuData;
 
-    configMenuData: MenuSideItem[] = [
-        {
-            //id: 'menu_basic_config',
-            title: '页面布局',
-            children: [
-                {
-                    path: 'sunny-tab',
-                    title: 'sunny-tab示例'
-                },
-                {
-                    path: 'rainy-tab',
-                    title: 'rainy-tab示例'
-                },
-                {
-                    path: 'foggy-tab',
-                    title: 'foggy-tab示例'
-                }
-            ]
-        },
-        {
-            //id: 'menu_system management',
-            //img: 'showcase/resources/images/mono/menu.svg',
-            title: '其他示例',
-            children: [
-                {
-                    path: 'demo1',
-                    title: '示例1'
-                },
-                {
-                    path: 'demo2',
-                    title: '示例2'
-                },
-                {
-                    path: 'demo3',
-                    title: '示例3'
-                }
-            ]
-        }
-    ];
-
-    // Nav bar demo
-    tabLinks = [
-        {label: 'Sun', link: 'sunny-tab'},
-        {label: 'Rain', link: 'rainy-tab'}
-    ];
-
-    constructor(private tabRouterOutletService: TabRouterOutletService, activatedRoute: ActivatedRoute) {
-        //this.tabRouterOutletService = service;
-        this.tabRouterOutletService.mainActivatedRoute = activatedRoute;
-        this.tabRouterOutletService.menuData = this.configMenuData;
+    constructor() {
+        console.log('NestNavDemoComponent constructor');
     }
 
     ngOnInit(): void {
-        console.log('SubPageDemoComponent ngOnInit....');
+        console.log('NestNavDemoComponent ngOnInit....', ConfigMenuData);
     }
 
     ngOnDestroy(): void {
-        console.log('SubPageDemoComponent ngOnDestroy....');
-    }
-
-    test() {
-        console.log(this.tabLinks);
-
-        this.tabLinks.push({label: 'Fog4', link: 'foggy-tab'});
-        console.log(this.tabLinks);
+        console.log('NestNavDemoComponent ngOnDestroy....');
     }
 }
 
 
 @Component({
     moduleId: module.id,
-    selector: 'sunny-routed-content',
-    template: 'This is the routed body of the sunny tab.',
+    template: `<h1>Tab Nav Bar</h1>
+               This is the routed body of the sunny tab.`
 })
-export class SunnyTabContent implements OnInit {
+export class SunnyTabContentComponent implements OnInit {
+
+    constructor() {
+        console.log('SunnyTabContentComponent constructor');
+    }
 
     ngOnInit(): void {
-        console.log('ces1');
+        console.log('SunnyTabContentComponent ngOnInit');
     }
 }
 
 
 @Component({
     moduleId: module.id,
-    selector: 'rainy-routed-content',
     template: 'This is the routed body of the rainy tab.',
 })
-export class RainyTabContent {
+export class RainyTabContentComponent implements OnInit {
+
+    constructor() {
+        console.log('RainyTabContentComponent constructor');
+    }
 
     ngOnInit(): void {
-        console.log('ces2');
+        console.log('RainyTabContentComponent ngOnInit');
     }
 }
 
 
 @Component({
     moduleId: module.id,
-    selector: 'foggy-routed-content',
     template: 'This is the routed body of the foggy tab.',
 })
-export class FoggyTabContent {
+export class FoggyTabContentComponent implements OnInit {
+
+    constructor() {
+        console.log('FoggyTabContentComponent constructor');
+    }
 
     ngOnInit(): void {
-        console.log('ces3');
+        console.log('FoggyTabContentComponent ngOnInit');
     }
 }
 

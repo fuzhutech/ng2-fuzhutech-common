@@ -9,6 +9,10 @@ import {ConfigMenuData} from './tab-page-demo-routing.module';
 export class TabPageDemoComponent implements OnInit, OnDestroy {
     menuData = ConfigMenuData;
 
+    constructor() {
+        console.log('TabPageDemoComponent constructor');
+    }
+
     ngOnInit() {
         console.log('TabPageDemoComponent ngOnInit');
     }

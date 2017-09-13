@@ -154,16 +154,35 @@ export class TabRouterOutletService {
     }
 
     private getSubMenuLinkItemData(showPath: string) {
-        if (isUndefined(this.menuData)) {
+
+        if (!this.menuData) {
             return null;
         }
 
         for (const entry of this.menuData) {
-            if (entry.children) {
-                for (const subMenuLinkItem of entry.children) {
-                    if ('/' + subMenuLinkItem.path == showPath) {
-                        return subMenuLinkItem;
-                    }
+            const rest = this.getSubMenuLinkItem(showPath, entry);
+            if (rest && rest != null) {
+                return rest;
+            }
+        }
+
+        return null;
+    }
+
+    private getSubMenuLinkItem(showPath: string, itemData: MenuSideItem) {
+        if (!itemData) {
+            return null;
+        }
+
+        if ('/' + itemData.path == showPath) {
+            return itemData;
+        }
+
+        if (itemData.children) {
+            for (const subMenuLinkItem of itemData.children) {
+                const rest = this.getSubMenuLinkItem(showPath, subMenuLinkItem);
+                if (rest && rest != null) {
+                    return rest;
                 }
             }
         }

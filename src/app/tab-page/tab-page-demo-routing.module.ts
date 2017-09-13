@@ -15,8 +15,8 @@ import {MenuSideItem} from '../ng2-fuzhutech-common';
                     {path: 'sub-page', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
                     {path: 'sub-page1', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
                     {path: 'sub-page2', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
-                    {path: 'demo1', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
-                    {path: 'demo2', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
+                    {path: 'demo1', loadChildren: '../nest-nav/nest-nav-demo.module#FzNestNavDemoModule'},
+                    {path: 'demo2', loadChildren: '../nest-nav/nest-nav-demo.module#FzNestNavDemoModule'},
                     {path: 'demo3', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'}
                 ]
             }
@@ -50,7 +50,7 @@ export const ConfigMenuData: MenuSideItem[] = [
                 title: '子页面示例2'
             },
             {
-                title: '其他示例',
+                title: '嵌套页面',
                 children: [
                     {path: 'demo1', title: '示例1'},
                     {path: 'demo2', title: '示例2'}
