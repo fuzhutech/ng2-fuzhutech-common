@@ -2,10 +2,8 @@
 
     <md-sidenav #sidenav mode="side" class="app-sidenav" opened="true" style="min-height: 100%;">
         <fz-menu-side [menuData]="tabRouterOutletService.menuData"
-                     (onRouterLinkClick)="onRouterLinkClick($event)"></fz-menu-side>
+                      (onRouterLinkClick)="onRouterLinkClick($event)"></fz-menu-side>
     </md-sidenav>
-
-    <fz-main-router-outlet #fzrouter name="primary"></fz-main-router-outlet>
 
     <md-tab-group #tabView class="demo-tab-group" dynamicHeight
                   [(selectedIndex)]="tabRouterOutletService.activeTabIndex">
@@ -13,7 +11,8 @@
         <md-tab *ngFor="let tab of tabRouterOutletService.tabs" [disabled]="tab.disabled">
             <ng-template md-tab-label>
 
-                <div (dblclick)="closeTab($event,tab)" (contextmenu)="onNodeRightClick($event,tab,cm)">{{tab.label}}
+                <div (click)="test({orgin:$event,tab:tab})" (dblclick)="closeTab($event,tab)"
+                     (contextmenu)="onNodeRightClick($event,tab,cm)">{{tab.label}}
                 </div>
 
             </ng-template>
@@ -24,5 +23,7 @@
     </md-tab-group>
 
     <p-contextMenu #cm [model]="items"></p-contextMenu>
+
+    <fz-main-router-outlet #fzrouter name="primary"></fz-main-router-outlet>
 
 </md-sidenav-container>

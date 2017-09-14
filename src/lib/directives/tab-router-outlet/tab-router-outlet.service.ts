@@ -15,7 +15,7 @@ export class TabOutletContext {
     outlet: RouterOutlet | null = null;
 
     //children = new ChildrenOutletContexts();
-    //attachRef: ComponentRef<any> | null = null;
+    attachRef: ComponentRef<any> | null = null;
 
     tabOutlet: any | null = null;
     route: ActivatedRoute | null = null;
@@ -77,6 +77,16 @@ export class TabRouterOutletService {
         const contexts = this.contexts;
         this.contexts = new Map();
         return contexts;
+    }
+
+    onTabSelectChange(tab: TabData) {
+        //console.log(tab);
+        const tabContext: TabOutletContext = this.getContext(tab.path);
+        //console.log(tabContext);
+
+        this.mainRouterOutLet.location_fz.detach();
+        this.mainRouterOutLet.attach(tabContext.attachRef, tabContext.route);
+        console.log(tabContext);
     }
 
     getContext(childName: string): TabOutletContext | null {

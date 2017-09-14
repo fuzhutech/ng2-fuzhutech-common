@@ -32,7 +32,7 @@ export class FzRouterOutletDirective extends RouterOutlet implements OnDestroy, 
      * @param {ChangeDetectorRef} changeDetector_fz
      * @param {TabRouterOutletService} service
      */
-    constructor(protected parentContexts_fz: ChildrenOutletContexts, protected location_fz: ViewContainerRef,
+    constructor(protected parentContexts_fz: ChildrenOutletContexts, public location_fz: ViewContainerRef,
                 protected  resolver_fz: ComponentFactoryResolver, @Attribute('name') name: string,
                 protected  changeDetector_fz: ChangeDetectorRef) {
 

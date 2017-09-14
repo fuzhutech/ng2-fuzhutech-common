@@ -11,7 +11,7 @@ import {MenuSideItem} from '../ng2-fuzhutech-common';
                 path: '',
                 component: TabPageDemoComponent,
                 children: [
-                    {path: '', redirectTo: 'sub-page'},
+                    {path: '', redirectTo: 'demo1'},
                     {path: 'sub-page', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
                     {path: 'sub-page1', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},
                     {path: 'sub-page2', loadChildren: '../sub-page/sub-page-demo.module#FzSubPageDemoModule'},

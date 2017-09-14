@@ -96,4 +96,10 @@ export class TabPageComponent implements OnInit, OnDestroy {
     CloseAll(event) {
         console.log(event);
     }
+
+    test(event) {
+        console.log('test--------------');
+        this.tabRouterOutletService.onTabSelectChange(event.tab);
+    }
+
 }
